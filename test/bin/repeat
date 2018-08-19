@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# The name of this executable program.
+PROG="$( basename "${BASH_SOURCE[0]}" )"
+
+if [ $# -lt 2 ]; then
+    exec >&2 # Redirect all further stdout to stderr.
+
+    echo "usage: $PROG COUNT COMMAND..."
+    echo
+    echo "Repeat COMMAND... COUNT times."
+
+    exit 2
+fi
+
+COUNT=$1
+shift
+
+x=0
+
+while [ $x -lt $COUNT ]; do
+    eval "$@"
+    let x=x+1
+done

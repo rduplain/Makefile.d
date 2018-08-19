@@ -13,6 +13,7 @@ __MACOSX
 *.out
 *.pdf
 /Procfile
+*.rdb
 *.sqlite
 *.sqlite-journal
 *.sw*

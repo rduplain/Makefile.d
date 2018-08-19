@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+UNPACKED=redis-4.0.11
+ARCHIVE=$UNPACKED.tar.gz
+SHA256=fc53e73ae7586bcdacb4b63875d1ff04f68c5474c1ddeda78f00e5ae2eed1bbb
+
+check() {
+    # Installs to this location, which local to the project.
+    # See if the file exists.
+    ls $REQD_PREFIX/bin/redis-server
+}
+
+resources() {
+    local url=http://download.redis.io/releases/$ARCHIVE
+    echo $url $ARCHIVE sha256 $SHA256
+}
+
+install() {
+    tar -xf $ARCHIVE
+    cd $UNPACKED
+    PREFIX=$REQD_PREFIX make install
+}
+
+reqd_main "$@"

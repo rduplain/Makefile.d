@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Wrap the test Makefile to report success or failure.
+#
+# There's a race condition as to whether make exits with:
+#
+# * 143 - poorman exits with a SIGTERM
+# *   2 - make processes a SIGTERM issued by poorman
+#
+# Accordingly, the exit status code is not a reliable test.
+# Provide a reliable test.
+
+test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+
+cd $test_dir
+
+SUCCESSFUL='redis-cli | 10' # poorman output, when filtered, indicates success.
+
+filter() {
+    # Filter terminal control sequences (lifted from bats project).
+
+    sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'
+}
+
+log() {
+    # Handle log output, return whether successful.
+
+    local success
+
+    while IFS= read -r line || [ -n "$line" ]; do
+        if echo "$line" | filter | grep -q "$SUCCESSFUL"; then
+            success=true
+        fi
+
+        echo "$line" | grep -v -e 'make: ***' -e 'Terminated'
+    done
+
+    [ -n "$success" ]
+}
+
+green() {
+    # Print line to stdout, in green.
+
+    echo -e "\033[1;32m$@\033[0m"
+}
+
+red() {
+    # Print line to stdout, in red.
+
+    echo -e "\033[1;31m$@\033[0m"
+}
+
+make_run() {
+    # Run code under test.
+
+    # Note that poorman is running in same process group.
+    POORMAN_SELECTIVE_KILL=true make 2>&1 | log
+}
+
+main() {
+    # Run the test suite.
+
+    # Given POORMAN_SELECTIVE_KILL=true, send a signal to redis-server.
+    trap 'killall redis-server > /dev/null 2>&1' INT TERM EXIT
+
+    if make_run; then
+        green 'Test passed.'
+        return 0
+    else
+        red 'Test failed.'
+        return 1
+    fi
+}
+
+main "$@"
