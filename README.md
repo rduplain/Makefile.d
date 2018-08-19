@@ -41,11 +41,11 @@ Example, without git:
 
 * [test/external/without-git/Makefile](test/external/without-git/Makefile)
 
-The 'without-git' Makefile linked above shows how to install without using git
+The 'without-git' Makefile linked above shows how to install without using git,
 while still verifying integrity of the download. To compute the SHA256
-checksum, use git in a development environment . First `git checkout` the
-reference of interest. Then, run the following command line to get a SHA256
-checksum matching a git short ref (e.g. 'c0ffee', not v0.x) download from
+checksum, use git in a development environment. First `git checkout` the ref of
+interest. Then, run the following command line to get a SHA256 checksum
+matching a git short ref (e.g. `1c0ffee`, not `v0.x`) download from
 GitHub. Note that this assumes GitHub provides tarballs with gzip compression
 level 6 (as in `-6` in the command below), which is true as of the time of this
 writing, but is an undocumented implementation detail. Further, this assumes a
