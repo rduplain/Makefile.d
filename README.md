@@ -32,7 +32,7 @@ Example, with git:
 The Makefile.d's 'master' branch is stable.
 
 
-## Installation Without `git`
+### Installation Without `git`
 
 Example, without git:
 
