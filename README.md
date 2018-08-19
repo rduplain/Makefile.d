@@ -30,3 +30,8 @@ See:
 * [test/external/with-git/Makefile](test/external/with-git/Makefile)
 
 The Makefile.d's 'master' branch is stable.
+
+
+---
+
+Copyright (c) 2015-2018, Ron DuPlain. BSD licensed.
