@@ -1,3 +1,5 @@
+# Provide poorman to run a Procfile.
+
 __FILE__ := $(lastword $(MAKEFILE_LIST))
 DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
@@ -11,6 +13,8 @@ POORMAN_SHA256 := \
 GITHUB_RAW := raw.githubusercontent.com
 GITHUB_USER := rduplain
 
+# Though poorman.mk is functional without reqd.mk,
+# it installs to reqd's conventional location.
 POORMAN := $(PROJECT_ROOT)/.reqd/usr/bin/poorman
 
 $(POORMAN): $(__FILE__) | curl-command

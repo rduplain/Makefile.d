@@ -1,10 +1,13 @@
-# Here is a custom todo tool, documented clearly so you know it works.
-# If we write capital tee oh dee oh literally, `make todo` will list Makefile.
-# We don't want that.  We want to find actual todos in the project.
-# The sed expression below normalizes whitespace within one tab-stop.
-# In the sed expression, we match [^T\ODO]* to avoid .* chopping off lines.
-# Dummy regular expression brackets [T] don't do anything to our grep call.
-# Dummy escape \O is literal O, which is used to avoid matching Makefile.
+# Provide a recipe to find capital "todo" lines in the project.
+
+# Here is a custom todo tool, documented given its arcane invocation. If this
+# had capital tee oh dee oh literally, `make todo` will list this file, which
+# is a false positive. Instead, find actual todos in the project.
+#
+# The sed expression normalizes whitespace within one tab-stop, matching
+# [^T\ODO]* to avoid .* chopping off lines. Dummy regular expression brackets
+# [T] don't do anything to the grep call. Dummy escape \O is literal O, which
+# is used to avoid matching this Makefile.
 todo:
 	@echo
 	@echo "T"ODOs:
