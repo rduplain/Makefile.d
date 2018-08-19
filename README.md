@@ -1,5 +1,8 @@
 ## Makefile.d: Useful Makefile includes for runnable projects.
 
+[![Build Status][build]](https://travis-ci.org/rduplain/Makefile.d)
+
+
 ### Usage
 
 Add include statements to the project's Makefile, e.g.:
@@ -56,6 +59,9 @@ git archive \
         openssl dgst -sha256 |\
             awk '{ print $2 }'
 ```
+
+
+[build]: https://travis-ci.org/rduplain/Makefile.d.svg?branch=master
 
 
 ---
