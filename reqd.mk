@@ -6,8 +6,8 @@ DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
-REQD_VERSION := v2.0
-REQD_SHA256 := dca4495f40c1b5c23b1f6edf7405ee56d4c6ff224c972de002ec852b48dd2797
+REQD_VERSION := v2.1
+REQD_SHA256 := c29886329fe7e45771f12d8bd13af48c218448635a045904c72493742e0ad8e8
 
 GITHUB_RAW := raw.githubusercontent.com
 GITHUB_USER := rduplain
