@@ -1,4 +1,5 @@
 language: generic
+os: osx
 script:
   - make -C ./test/external/with-git/
   - make -C ./test/external/without-git/

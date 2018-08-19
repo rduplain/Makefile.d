@@ -31,7 +31,7 @@ log() {
             success=true
         fi
 
-        echo "$line" | grep -v -e 'make: ***' -e 'Terminated'
+        echo "$line" | grep -v -e 'make: \*\*\*' -e 'Terminated'
     done
 
     [ -n "$success" ]
