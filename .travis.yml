@@ -11,6 +11,10 @@ before_install:
   - make --version; true # GNU
   - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
   - ./test/bin/prep-ci
+before_script:
+  # Escape virtualenv, https://github.com/travis-ci/travis-ci/issues/8589.
+  - type -t deactivate && deactivate || true
+  - export PATH=/opt/python/3.4/bin:$PATH
 script:
   - ./test/bin/test-suite
 notifications:
