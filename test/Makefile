@@ -11,7 +11,7 @@ python-repl: python-command
 	$(PYTHON)
 
 # Run `make python-requirements` to install updates after changing this.
-PYTHON_REQUIREMENTS := pip jeni
+PYTHON_REQUIREMENTS := pip jeni==0.4.1
 
 
 ## Run Recipes w/Automated Requirements
