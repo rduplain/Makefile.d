@@ -60,7 +60,7 @@ main() {
     # Run the test suite.
 
     # Given POORMAN_SELECTIVE_KILL=true, send a signal to redis-server.
-    trap 'killall redis-server > /dev/null 2>&1' INT TERM EXIT
+    trap 'pkill redis-server > /dev/null 2>&1' INT TERM EXIT
 
     if make_run; then
         green 'Test passed.'
