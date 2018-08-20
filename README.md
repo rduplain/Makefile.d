@@ -15,6 +15,14 @@ Use variables and recipe patterns respective to included files. See
 [test/Makefile](test/Makefile) for example usage.
 
 
+### Platform Support
+
+This project is cross-platform for Unix systems -- GNU/Linux, Mac OS X, ... --
+as long as the Makefile is being run by GNU Make 3.81+, where 3.81 has a
+release date in 2006. Specifically, these includes are not portable to non-GNU
+implementations of Make (e.g. BSD Make) given dynamic features in use.
+
+
 ### Installation
 
 Add `.Makefile.d` to a project's .gitignore, or similar, and create a recipe in
