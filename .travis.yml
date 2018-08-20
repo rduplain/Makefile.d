@@ -1,9 +1,16 @@
 language: generic
-os: osx
+matrix:
+  include:
+    - os: linux
+      language: python
+      python: 3.4
+    - os: osx
+      language: generic
 before_install:
   - which make
   - make --version; true # GNU
   - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
+  - ./test/bin/prep-ci
 script:
   - ./test/bin/test-suite
 notifications:

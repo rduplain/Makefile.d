@@ -3,6 +3,16 @@
 run: Procfile | poorman-command
 	$(POORMAN) start
 
+prove-python: python-command
+	$(PYTHON) -c 'import pip; print(pip.__version__)'
+	$(PYTHON) -c 'import jeni; print(jeni.__version__)'
+
+python-repl: python-command
+	$(PYTHON)
+
+# Run `make python-requirements` to install updates after changing this.
+PYTHON_REQUIREMENTS := pip jeni
+
 
 ## Run Recipes w/Automated Requirements
 
@@ -10,6 +20,7 @@ include .Makefile.d/command.mk
 include .Makefile.d/path.mk
 include .Makefile.d/poorman.mk
 include .Makefile.d/procfile.mk
+include .Makefile.d/python.mk
 include .Makefile.d/reqd.mk
 include .Makefile.d/todo.mk
 include .Makefile.d/wait.mk
