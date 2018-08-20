@@ -62,6 +62,15 @@ Optionally provide a ref:
 ```
 
 
+### Tests
+
+Run tests:
+
+```sh
+./test/bin/test-suite
+```
+
+
 [build]: https://travis-ci.org/rduplain/Makefile.d.svg?branch=master
 
 

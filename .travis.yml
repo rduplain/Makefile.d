@@ -1,9 +1,11 @@
 language: generic
 os: osx
+before_install:
+  - which make
+  - make --version; true # GNU
+  - make -V MAKE_VERSION 2>/dev/null; true # BSD
 script:
-  - make -C ./test/external/with-git/
-  - make -C ./test/external/without-git/
-  - ./test/bin/test
+  - ./test/bin/test-suite
 notifications:
   email:
     on_success: never

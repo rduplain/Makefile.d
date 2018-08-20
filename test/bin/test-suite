@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Run all tests. Stop on first test failure to avoid overlooking issues.
+
+test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+
+make -C "$test_dir"/external/with-git/ &&
+make -C "$test_dir"/external/without-git/ &&
+"$test_dir"/bin/test
