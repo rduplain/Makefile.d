@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Generate SHA256 of current git HEAD.
+#
+# See README for caveats if output SHA256 not match GitHub's archive.
+
+dirty() {
+    # Check if git repository is dirty, return zero if dirty.
+    #
+    # Here, dirty means one or both of:
+    #
+    # * the git index is not empty (compared to HEAD)
+    # * the working tree has changes (compared to HEAD)
+
+    if git diff-index --quiet --cached HEAD && git diff-files --quiet; then
+        return 1
+    fi
+
+    return 0
+
+}
+
+if dirty; then
+    echo 'warning: git repository is dirty.'                             >&2
+    echo                                                                 >&2
+    echo '`git archive` will not include any changes not yet committed.' >&2
+    echo                                                                 >&2
+    echo                                                                 >&2
+fi
+
+ref=$(git rev-parse --short HEAD)
+
+# Again... See README for caveats if output SHA256 not match GitHub's archive.
+echo    "ref:    $ref  "
+echo -n "sha256: "
+git archive \
+    --prefix=Makefile.d-"$ref"/ \
+    --format=tar.gz -6 HEAD |\
+        openssl dgst -sha256 |\
+            awk '{ print $2 }'

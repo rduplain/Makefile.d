@@ -44,20 +44,15 @@ Example, without git:
 The 'without-git' Makefile linked above shows how to install without using git,
 while still verifying integrity of the download. To compute the SHA256
 checksum, use git in a development environment. First `git checkout` the ref of
-interest. Then, run the following command line to get a SHA256 checksum
-matching a git short ref (e.g. `1c0ffee`, not `v0.x`) download from
-GitHub. Note that this assumes GitHub provides tarballs with gzip compression
-level 6 (as in `-6` in the command below), which is true as of the time of this
-writing, but is an undocumented implementation detail. Further, this assumes a
-prefix directory using `git rev-parse` (as below), which is also an
-implementation detail.
+interest. Then, run the following command line to get a SHA256 checksum.
+
+Note that this assumes GitHub provides tarballs with gzip compression level 6,
+which is true as of the time of this writing, but is an undocumented
+implementation detail. Further, this assumes a tarball prefix directory using
+`git rev-parse`, which is also an implementation detail.
 
 ```sh
-git archive \
-    --prefix=Makefile.d-$(git rev-parse --short HEAD)/ \
-    --format=tar.gz -6 HEAD |\
-        openssl dgst -sha256 |\
-            awk '{ print $2 }'
+./test/bin/generate-sha256
 ```
 
 
