@@ -48,15 +48,20 @@ python-command: $(PYTHON) $(PIP_INSTALLED)
 python3-command: $(PYTHON) $(PIP_INSTALLED)
 	@true
 
-# In a Makefile which includes this .mk, set MAKEFILE before the include
-# statement. This will set a dependency on the Makefile so that any changes to
-# it will cause pip to reinstall requirements, which will allow the Makefile to
+# In a Makefile which includes this .mk, set REQUIREMENTS_TXT or MAKEFILE
+# before the include statement. This will set a dependency so that any changes
+# will cause pip to reinstall requirements, which will allow the Makefile to
 # set PYTHON_REQUIREMENTS and have any changes to that variable take effect.
 #
 # In Makefile:
 #
+#     REQUIREMENTS_TXT := requirements.txt     # or
 #     MAKEFILE := $(lastword $(MAKEFILE_LIST))
-ifdef MAKEFILE
+ifdef REQUIREMENTS_TXT
+$(PIP_INSTALLED): $(REQUIREMENTS_TXT)
+	@$(PIP) install --upgrade -r $(REQUIREMENTS_TXT)
+	@touch $@
+else ifdef MAKEFILE
 $(PIP_INSTALLED): $(MAKEFILE)
 	@$(PIP) install --upgrade $(PYTHON_REQUIREMENTS)
 	@touch $@
