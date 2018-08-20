@@ -15,12 +15,6 @@ PYTHON := $(PYTHON_ENV)/bin/python
 PIP3 := $(PYTHON_ENV)/bin/pip3
 PIP := $(PYTHON_ENV)/bin/pip
 
-GETPIP_VERSION := f88ab19
-GETPIP_SHA256 := \
-	94c006f560a46105c907fa4485d16fb61308696af4bb6c29da1b9ad06380e8fa
-GETPIP_URL := \
-	https://raw.githubusercontent.com/pypa/get-pip/$(GETPIP_VERSION)/get-pip.py
-
 # Provide a space delimited list of requirements with PYTHON_REQUIREMENTS.
 # Defaults to pip as a no-op.
 #
@@ -38,11 +32,7 @@ $(PYTHON): | original-python3-command
 	@python3 -c 'import sys; sys.exit(int(sys.base_prefix!=sys.prefix))'
 	@echo 'Continuing ...'
 	@cd $(dir $(PYTHON_ENV)); python3 -m venv --clear $(PYTHON_ENV_NAME)
-	@curl -sSL qwerty.sh |\
-		sh -s - \
-		--sha256=$(GETPIP_SHA256) \
-		$(GETPIP_URL) |\
-			$(PYTHON) -
+	@$(PYTHON) -m ensurepip --default-pip
 	@$(PIP3) install --upgrade pip
 	@$(PIP) install $(PYTHON_REQUIREMENTS)
 
