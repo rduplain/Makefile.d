@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Generate SHA256 of current git HEAD.
+# Generate SHA256 of a git ref, defaulting to current git HEAD.
 #
 # See README for caveats if output SHA256 not match GitHub's archive.
 
@@ -19,7 +19,13 @@ dirty() {
 
 }
 
-if dirty; then
+if [ $# -gt 0 ]; then
+    target_ref=$1
+else
+    target_ref=HEAD
+fi
+
+if [ "$target_ref" = "HEAD" ] && dirty; then
     echo 'warning: git repository is dirty.'                             >&2
     echo                                                                 >&2
     echo '`git archive` will not include any changes not yet committed.' >&2
@@ -27,13 +33,13 @@ if dirty; then
     echo                                                                 >&2
 fi
 
-ref=$(git rev-parse --short HEAD)
+ref=$(git rev-parse --short $target_ref)
 
 # Again... See README for caveats if output SHA256 not match GitHub's archive.
 echo    "ref:    $ref  "
 echo -n "sha256: "
 git archive \
     --prefix=Makefile.d-"$ref"/ \
-    --format=tar.gz -6 HEAD |\
+    --format=tar.gz -6 $target_ref |\
         openssl dgst -sha256 |\
             awk '{ print $2 }'

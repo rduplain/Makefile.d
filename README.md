@@ -55,6 +55,12 @@ implementation detail. Further, this assumes a tarball prefix directory using
 ./test/bin/generate-sha256
 ```
 
+Optionally provide a ref:
+
+```sh
+./test/bin/generate-sha256 f8f0b3a
+```
+
 
 [build]: https://travis-ci.org/rduplain/Makefile.d.svg?branch=master
 
