@@ -16,6 +16,8 @@ PYTHON_REQUIREMENTS := pip jeni
 
 ## Run Recipes w/Automated Requirements
 
+MAKEFILE := $(lastword $(MAKEFILE_LIST))
+
 include .Makefile.d/command.mk
 include .Makefile.d/path.mk
 include .Makefile.d/poorman.mk

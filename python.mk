@@ -15,6 +15,8 @@ PYTHON := $(PYTHON_ENV)/bin/python
 PIP3 := $(PYTHON_ENV)/bin/pip3
 PIP := $(PYTHON_ENV)/bin/pip
 
+PIP_INSTALLED := $(PYTHON_ENV)/bin/.pip-installed
+
 # Provide a space delimited list of requirements with PYTHON_REQUIREMENTS.
 # Defaults to pip as a no-op.
 #
@@ -40,11 +42,27 @@ python-requirements:
 	@$(PIP) install --upgrade $(PYTHON_REQUIREMENTS)
 
 # Replace command.mk's `python-command` to install virtualenv.
-python-command: $(PYTHON)
+python-command: $(PYTHON) $(PIP_INSTALLED)
 	@true
 
-python3-command: $(PYTHON)
+python3-command: $(PYTHON) $(PIP_INSTALLED)
 	@true
+
+# In a Makefile which includes this .mk, set MAKEFILE before the include
+# statement. This will set a dependency on the Makefile so that any changes to
+# it will cause pip to reinstall requirements, which will allow the Makefile to
+# set PYTHON_REQUIREMENTS and have any changes to that variable take effect.
+#
+# In Makefile:
+#
+#     MAKEFILE := $(lastword $(MAKEFILE_LIST))
+ifdef MAKEFILE
+$(PIP_INSTALLED): $(MAKEFILE)
+	@$(PIP) install --upgrade $(PYTHON_REQUIREMENTS)
+	@touch $@
+else
+$(PIP_INSTALLED): $(PYTHON)
+endif
 
 clean-python-env:
 	rm -fr $(PYTHON_ENV)
