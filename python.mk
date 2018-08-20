@@ -31,7 +31,7 @@ ifeq ($(PYTHON_REQUIREMENTS),)
 PYTHON_REQUIREMENTS := pip
 endif
 
-$(PYTHON): original-python3-command
+$(PYTHON): | original-python3-command
 	@python3 --version
 	@mkdir -p $(dir $(PYTHON_ENV))
 	@echo 'Verifying not in a virtualenv (which would lead to errors) ...'
