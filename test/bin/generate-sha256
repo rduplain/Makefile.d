@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Generate SHA256 of a git ref, defaulting to current git HEAD.
 #
-# See README for caveats if output SHA256 not match GitHub's archive.
+# See README caveats of GitHub's tarball mismatch with output SHA256.
+
+GITHUB_USER=${GITHUB_USER:-rduplain}
 
 dirty() {
     # Check if git repository is dirty, return zero if dirty.
@@ -35,11 +37,11 @@ fi
 
 ref=$(git rev-parse --short $target_ref)
 
-# Again... See README for caveats if output SHA256 not match GitHub's archive.
-echo    "ref:    $ref  "
+# Again... See README caveats of GitHub's tarball mismatch with output SHA256.
+echo    "ref:    $ref"
 echo -n "sha256: "
 git archive \
-    --prefix=Makefile.d-"$ref"/ \
+    --prefix=${GITHUB_USER}-Makefile.d-"$ref"/ \
     --format=tar.gz -6 $target_ref |\
         openssl dgst -sha256 |\
             awk '{ print $2 }'

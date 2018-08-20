@@ -57,7 +57,8 @@ interest. Then, run the following command line to get a SHA256 checksum.
 Note that this assumes GitHub provides tarballs with gzip compression level 6,
 which is true as of the time of this writing, but is an undocumented
 implementation detail. Further, this assumes a tarball prefix directory using
-`git rev-parse`, which is also an implementation detail.
+the GitHub username and project name, followed by `git rev-parse` with the
+short format, which is also an implementation detail.
 
 ```sh
 ./test/bin/generate-sha256

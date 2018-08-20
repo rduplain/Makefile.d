@@ -1,11 +1,11 @@
 include .Makefile.d/path.mk
 
 # See Makefile.d project README to compute SHA256.
-MAKEFILE_D_VERSION := f8f0b3a
+MAKEFILE_D_VERSION := cbf325a
 MAKEFILE_D_SHA256 := \
-	4184efe87c5dd26761d532711ba6335cebcf221cf9f7a19202c0184d08b1266a
+	856e083e3e677a7e88501f21ecc3b2902fcdc4736b2bea4deea3193b1d12da0e
 MAKEFILE_D_URL := \
-	https://github.com/rduplain/Makefile.d/archive/$(MAKEFILE_D_VERSION).tar.gz
+	https://github.com/rduplain/Makefile.d/tarball/$(MAKEFILE_D_VERSION)
 
 # Change 'master' to a release tag as desired.
 .Makefile.d/%.mk:
