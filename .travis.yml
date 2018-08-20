@@ -3,7 +3,7 @@ os: osx
 before_install:
   - which make
   - make --version; true # GNU
-  - make -V MAKE_VERSION 2>/dev/null; true # BSD
+  - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
 script:
   - ./test/bin/test-suite
 notifications:
