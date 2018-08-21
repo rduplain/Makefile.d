@@ -21,27 +21,61 @@ dirty() {
 
 }
 
-if [ $# -gt 0 ]; then
-    target_ref=$1
-else
-    target_ref=HEAD
-fi
+warn-if-dirty() {
+    # Warn to stderr if target ref is HEAD and working tree is dirty.
 
-if [ "$target_ref" = "HEAD" ] && dirty; then
-    echo 'warning: git repository is dirty.'                             >&2
-    echo                                                                 >&2
-    echo '`git archive` will not include any changes not yet committed.' >&2
-    echo                                                                 >&2
-    echo                                                                 >&2
-fi
+    if [ $# -ne 1 ]; then
+        echo "usage: warn-if-dirty REF" >&2
+        return 2
+    fi
 
-ref=$(git rev-parse --short $target_ref)
+    local target_ref=$1
+    shift
 
-# Again... See README caveats of GitHub's tarball mismatch with output SHA256.
-echo    "ref:    $ref"
-echo -n "sha256: "
-git archive \
-    --prefix=${GITHUB_USER}-Makefile.d-"$ref"/ \
-    --format=tar.gz -6 $target_ref |\
-        openssl dgst -sha256 |\
-            awk '{ print $2 }'
+    if [ "$target_ref" = "HEAD" ] && dirty; then
+        echo 'warning: git repository is dirty.'                            >&2
+        echo                                                                >&2
+        echo '`git archive` will not include any uncommitted changes.'      >&2
+        echo                                                                >&2
+        echo                                                                >&2
+    fi
+}
+
+generate-sha256() {
+    # Generate SHA256 checksum of git archive, for given ref.
+
+    if [ $# -ne 1 ]; then
+        echo "usage: generate-sha256 REF" >&2
+        return 2
+    fi
+
+    local ref="$1"
+    shift
+
+    git archive \
+        --prefix=${GITHUB_USER}-Makefile.d-"$ref"/ \
+        --format=tar.gz -6 "$ref" |\
+            openssl dgst -sha256 |\
+                awk '{ print $2 }'
+}
+
+main() {
+    # Main.
+
+    if [ $# -gt 0 ]; then
+        target_ref=$1
+    else
+        target_ref=HEAD
+    fi
+
+    warn-if-dirty "$target_ref"
+
+    ref=$(git rev-parse --short $target_ref)
+
+    # Again... See README caveats of GitHub's tarball mismatch with output SHA256.
+    echo    "ref:    $ref"
+    echo -n "sha256: "
+    generate-sha256 "$ref"
+}
+
+main "$@"
