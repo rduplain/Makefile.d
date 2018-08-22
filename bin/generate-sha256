@@ -23,10 +23,12 @@ usage() {
     echo "usage: $PROG [OPTION...] [REF]"
     echo
     echo "REF is an optional git reference (default: HEAD)."
+    echo "Do not provide REF when using --release."
     echo
     echo "options:"
     echo
     echo "  --qwerty                   Output a qwerty.sh command."
+    echo "  --release                  Use the latest tag instead of REF."
     return 2
 }
 
@@ -64,17 +66,17 @@ dirty() {
 }
 
 warn_if_dirty_head() {
-    # Warn to stderr if target ref is HEAD and working tree is dirty.
+    # Warn to stderr if ref is HEAD and working tree is dirty.
 
     if [ $# -ne 1 ]; then
         echo "usage: warn_if_dirty REF" >&2
         return 2
     fi
 
-    local target_ref=$1
+    local ref=$1
     shift
 
-    if [ "$target_ref" = "HEAD" ] && dirty; then
+    if [ "$ref" = "HEAD" ] && dirty; then
         echo 'warning: git repository is dirty.'                            >&2
         echo                                                                >&2
         echo '`git archive` will not include any uncommitted changes.'      >&2
@@ -83,17 +85,35 @@ warn_if_dirty_head() {
     fi
 }
 
-github_detail() {
-    # Parse key GitHub details from git config.
+find_latest_git_tag() {
+    # Find the latest git tag, for the current branch.
+
+    git describe --tags --abbrev=0
+}
+
+is_git_tag() {
+    # Determine whether the given ref is a git tag.
+
+    git rev-parse -q --verify "refs/tags/$1" > /dev/null 2>&1
+}
+
+git_detail() {
+    # Parse given ref & key GitHub details from git config.
 
     if [ $# -ne 1 ]; then
-        echo "usage: github_detail REF" >&2
+        echo "usage: git_detail REF" >&2
         return 2
     fi
 
     local ref="$1"
     shift
 
+    # If ref is a valid tag, keep it as is. Else, use a canonical ref.
+    if ! is_git_tag "$ref"; then
+        ref=$(git rev-parse --short "$ref")
+    fi
+
+    local short_ref=$(git rev-parse --short "$ref")
     local url=${GIT_REMOTE_URL:-"$(git remote get-url origin)"}
 
     if [ -z "$url" ] || [ "${url//github/}" = "${url}" ]; then
@@ -106,6 +126,8 @@ github_detail() {
     local project=${project_git%%.git}
     local tarball="https://github.com/$user/$project/tarball/$ref"
 
+    echo "REF=$ref"
+    echo "SHORT_REF=$short_ref"
     echo "GITHUB_USER=$user"
     echo "GITHUB_PROJECT=$project"
     echo "GITHUB_TARBALL=$tarball"
@@ -119,19 +141,13 @@ generate_sha256() {
         return 2
     fi
 
-    local ref="$1"
-    shift
-
-    # Ensure short ref.
-    ref=$(git rev-parse --short "$ref")
-
-    eval "$(github_detail "$ref")"
+    eval "$(git_detail "$1")"
 
     # Again... See README caveats of GitHub's tarball SHA256.
-    local prefix="${GITHUB_USER}-${GITHUB_PROJECT}-${ref}/"
+    local prefix="${GITHUB_USER}-${GITHUB_PROJECT}-${SHORT_REF}/"
     git archive \
         --prefix="$prefix" \
-        --format=tar.gz -6 "$ref" |\
+        --format=tar.gz -6 "$REF" |\
             openssl dgst -sha256 |\
                 awk '{ print $2 }'
 }
@@ -144,14 +160,11 @@ generate_sha256_values() {
         return 2
     fi
 
-    local ref="$1"
-    shift
+    eval "$(git_detail "$1")"
 
-    eval "$(github_detail "$ref")"
-
-    echo "GITHUB_REF=$ref"
+    echo "GITHUB_REF=$REF"
     echo -n "GITHUB_SHA256="
-    generate_sha256 "$ref"
+    generate_sha256 "$REF"
     echo "GITHUB_TARBALL=$GITHUB_TARBALL"
 }
 
@@ -163,10 +176,7 @@ generate_qwerty_command() {
         return 2
     fi
 
-    local ref="$1"
-    shift
-
-    eval "$(generate_sha256_values "$ref")"
+    eval "$(generate_sha256_values "$1")"
 
     cat -<<EOF
 curl -sSL qwerty.sh |\\
@@ -181,7 +191,7 @@ main() {
 
     given awk git openssl
 
-    local target_ref qwerty
+    local ref qwerty release
 
     while [ "$1" != "" ]; do
         if case $1 in "-"*) true;; *) false;; esac; then
@@ -193,28 +203,33 @@ main() {
                 --qwerty)
                     qwerty=true
                     ;;
+                --release)
+                    release=true
+                    ;;
                 *)
                     usage "$PROG: unknown option '$1'"
                     ;;
             esac
         else
             # Argument does NOT start with a hyphen.
-            if [ -n "$target_ref" ]; then
+            if [ -n "$ref" ] || [ -n "$release" ]; then
                 usage
             else
-                target_ref="$1"
+                ref="$1"
             fi
         fi
         shift
     done
 
-    if [ -z "$target_ref" ]; then
-        target_ref=HEAD
+    if [ -z "$ref" ]; then
+        if [ -n "$release" ]; then
+            ref="$(find_latest_git_tag)"
+        else
+            ref=HEAD
+        fi
     fi
 
-    warn_if_dirty_head "$target_ref"
-
-    ref=$(git rev-parse --short "$target_ref")
+    warn_if_dirty_head "$ref"
 
     if [ -z "$qwerty" ]; then
         generate_sha256_values "$ref"
