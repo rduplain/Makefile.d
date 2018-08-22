@@ -73,6 +73,9 @@ generate-sha256() {
     local ref="$1"
     shift
 
+    # Ensure short ref.
+    ref=$(git rev-parse --short "$ref")
+
     local url=$(git remote get-url origin)
 
     if [ -z "$url" ] || [ "${url//github/}" = "${url}" ]; then
@@ -80,13 +83,13 @@ generate-sha256() {
         return 1
     fi
 
-    local github_user=$(echo ${url} | awk -F '[/:]' '{ print $(NF-1) }')
-    local github_project_git=$(echo ${url} | awk -F '[/:]' '{ print $NF }')
+    local github_user=$(echo "${url}" | awk -F '[/:]' '{ print $(NF-1) }')
+    local github_project_git=$(echo "${url}" | awk -F '[/:]' '{ print $NF }')
     local github_project=${github_project_git%%.git}
 
     # Again... See README caveats of GitHub's tarball SHA256.
     git archive \
-        --prefix=${github_user}-${github_project}-"$ref"/ \
+        --prefix="${github_user}-${github_project}-${ref}"/ \
         --format=tar.gz -6 "$ref" |\
             openssl dgst -sha256 |\
                 awk '{ print $2 }'
@@ -121,7 +124,7 @@ main() {
 
     warn-if-dirty-head "$target_ref"
 
-    ref=$(git rev-parse --short $target_ref)
+    ref=$(git rev-parse --short "$target_ref")
     generate-sha256-values "$ref"
 }
 
