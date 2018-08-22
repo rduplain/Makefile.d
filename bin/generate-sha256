@@ -92,6 +92,22 @@ generate-sha256() {
                 awk '{ print $2 }'
 }
 
+generate-sha256-values() {
+    # Generate shell eval-able output of checksum.
+
+    if [ $# -ne 1 ]; then
+        echo "usage: generate-sha256-values REF" >&2
+        return 2
+    fi
+
+    local ref="$1"
+    shift
+
+    echo "GITHUB_REF=$ref"
+    echo -n "GITHUB_SHA256="
+    generate-sha256 "$ref"
+}
+
 main() {
     # Main.
 
@@ -106,10 +122,7 @@ main() {
     warn-if-dirty-head "$target_ref"
 
     ref=$(git rev-parse --short $target_ref)
-
-    echo    "ref:    $ref"
-    echo -n "sha256: "
-    generate-sha256 "$ref"
+    generate-sha256-values "$ref"
 }
 
 main "$@"
