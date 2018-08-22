@@ -126,9 +126,12 @@ generate_sha256_values() {
     local ref="$1"
     shift
 
+    eval "$(github_detail "$ref")"
+
     echo "GITHUB_REF=$ref"
     echo -n "GITHUB_SHA256="
     generate_sha256 "$ref"
+    echo "GITHUB_TARBALL=$GITHUB_TARBALL"
 }
 
 main() {
