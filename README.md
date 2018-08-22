@@ -61,13 +61,13 @@ the GitHub username and project name, followed by `git rev-parse` with the
 short format, which is also an implementation detail.
 
 ```sh
-./test/bin/generate-sha256
+./bin/generate-sha256
 ```
 
 Optionally provide a ref:
 
 ```sh
-./test/bin/generate-sha256 f8f0b3a
+./bin/generate-sha256 f8f0b3a
 ```
 
 
