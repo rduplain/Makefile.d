@@ -42,11 +42,11 @@ dirty() {
 
 }
 
-warn-if-dirty-head() {
+warn_if_dirty_head() {
     # Warn to stderr if target ref is HEAD and working tree is dirty.
 
     if [ $# -ne 1 ]; then
-        echo "usage: warn-if-dirty REF" >&2
+        echo "usage: warn_if_dirty REF" >&2
         return 2
     fi
 
@@ -62,11 +62,11 @@ warn-if-dirty-head() {
     fi
 }
 
-generate-sha256() {
+generate_sha256() {
     # Generate SHA256 checksum of git archive, for given ref.
 
     if [ $# -ne 1 ]; then
-        echo "usage: generate-sha256 REF" >&2
+        echo "usage: generate_sha256 REF" >&2
         return 2
     fi
 
@@ -95,11 +95,11 @@ generate-sha256() {
                 awk '{ print $2 }'
 }
 
-generate-sha256-values() {
+generate_sha256_values() {
     # Generate shell eval-able output of checksum.
 
     if [ $# -ne 1 ]; then
-        echo "usage: generate-sha256-values REF" >&2
+        echo "usage: generate_sha256_values REF" >&2
         return 2
     fi
 
@@ -108,7 +108,7 @@ generate-sha256-values() {
 
     echo "GITHUB_REF=$ref"
     echo -n "GITHUB_SHA256="
-    generate-sha256 "$ref"
+    generate_sha256 "$ref"
 }
 
 main() {
@@ -122,10 +122,10 @@ main() {
         target_ref=HEAD
     fi
 
-    warn-if-dirty-head "$target_ref"
+    warn_if_dirty_head "$target_ref"
 
     ref=$(git rev-parse --short "$target_ref")
-    generate-sha256-values "$ref"
+    generate_sha256_values "$ref"
 }
 
 main "$@"
