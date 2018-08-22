@@ -62,6 +62,34 @@ warn_if_dirty_head() {
     fi
 }
 
+github_detail() {
+    # Parse key GitHub details from git config.
+
+    if [ $# -ne 1 ]; then
+        echo "usage: github_detail REF" >&2
+        return 2
+    fi
+
+    local ref="$1"
+    shift
+
+    local url=$(git remote get-url origin)
+
+    if [ -z "$url" ] || [ "${url//github/}" = "${url}" ]; then
+        echo "Remote 'origin' is not GitHub: $url" >&2
+        return 1
+    fi
+
+    local user=$(echo "${url}" | awk -F '[/:]' '{ print $(NF-1) }')
+    local project_git=$(echo "${url}" | awk -F '[/:]' '{ print $NF }')
+    local project=${project_git%%.git}
+    local tarball="https://github.com/$user/$project/tarball/$ref"
+
+    echo "GITHUB_USER=$user"
+    echo "GITHUB_PROJECT=$project"
+    echo "GITHUB_TARBALL=$tarball"
+}
+
 generate_sha256() {
     # Generate SHA256 checksum of git archive, for given ref.
 
@@ -76,20 +104,12 @@ generate_sha256() {
     # Ensure short ref.
     ref=$(git rev-parse --short "$ref")
 
-    local url=$(git remote get-url origin)
-
-    if [ -z "$url" ] || [ "${url//github/}" = "${url}" ]; then
-        echo "Remote 'origin' is not GitHub: $url" >&2
-        return 1
-    fi
-
-    local github_user=$(echo "${url}" | awk -F '[/:]' '{ print $(NF-1) }')
-    local github_project_git=$(echo "${url}" | awk -F '[/:]' '{ print $NF }')
-    local github_project=${github_project_git%%.git}
+    eval "$(github_detail "$ref")"
 
     # Again... See README caveats of GitHub's tarball SHA256.
+    local prefix="${GITHUB_USER}-${GITHUB_PROJECT}-${ref}/"
     git archive \
-        --prefix="${github_user}-${github_project}-${ref}"/ \
+        --prefix="$prefix" \
         --format=tar.gz -6 "$ref" |\
             openssl dgst -sha256 |\
                 awk '{ print $2 }'
