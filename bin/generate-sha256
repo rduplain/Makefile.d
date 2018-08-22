@@ -73,7 +73,7 @@ github_detail() {
     local ref="$1"
     shift
 
-    local url=$(git remote get-url origin)
+    local url=${GIT_REMOTE_URL:-"$(git remote get-url origin)"}
 
     if [ -z "$url" ] || [ "${url//github/}" = "${url}" ]; then
         echo "Remote 'origin' is not GitHub: $url" >&2
