@@ -9,6 +9,27 @@ set -e
 # The name of this executable program.
 PROG="$( basename "${BASH_SOURCE[0]}" )"
 
+usage() {
+    # Print program usage to stderr and return 2.
+
+    exec >&2 # Redirect all further stdout to stderr.
+
+    if [ $# -gt 0 ]; then
+        # Print message argument, if given.
+        echo "$@"
+        echo
+    fi
+
+    echo "usage: $PROG [OPTION...] [REF]"
+    echo
+    echo "REF is an optional git reference (default: HEAD)."
+    echo
+    echo "options:"
+    echo
+    echo "  --qwerty                   Output a qwerty.sh command."
+    return 2
+}
+
 given() {
     # Check that the given commands exist.
 
@@ -134,21 +155,72 @@ generate_sha256_values() {
     echo "GITHUB_TARBALL=$GITHUB_TARBALL"
 }
 
+generate_qwerty_command() {
+    # Generate a qwerty.sh command line.
+
+    if [ $# -ne 1 ]; then
+        echo "usage: generate_qwerty_command REF" >&2
+        return 2
+    fi
+
+    local ref="$1"
+    shift
+
+    eval "$(generate_sha256_values "$ref")"
+
+    cat -<<EOF
+curl -sSL qwerty.sh |\\
+    sh -s - \\
+    --sha256=${GITHUB_SHA256} \\
+    ${GITHUB_TARBALL}
+EOF
+}
+
 main() {
     # Main.
 
     given awk git openssl
 
-    if [ $# -gt 0 ]; then
-        target_ref=$1
-    else
+    local target_ref qwerty
+
+    while [ "$1" != "" ]; do
+        if case $1 in "-"*) true;; *) false;; esac; then
+            # Argument starts with a hyphen.
+            case "$1" in
+                -h | --help)
+                    usage
+                    ;;
+                --qwerty)
+                    qwerty=true
+                    ;;
+                *)
+                    usage "$PROG: unknown option '$1'"
+                    ;;
+            esac
+        else
+            # Argument does NOT start with a hyphen.
+            if [ -n "$target_ref" ]; then
+                usage
+            else
+                target_ref="$1"
+            fi
+        fi
+        shift
+    done
+
+    if [ -z "$target_ref" ]; then
         target_ref=HEAD
     fi
 
     warn_if_dirty_head "$target_ref"
 
     ref=$(git rev-parse --short "$target_ref")
-    generate_sha256_values "$ref"
+
+    if [ -z "$qwerty" ]; then
+        generate_sha256_values "$ref"
+    else
+        generate_qwerty_command "$ref"
+    fi
 }
 
 main "$@"
