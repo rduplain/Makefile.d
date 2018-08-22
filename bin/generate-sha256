@@ -206,6 +206,14 @@ main() {
                 --release)
                     release=true
                     ;;
+                --source)
+                    # Support sourcing this file in order to access functions:
+                    #
+                    #     . path/to/this/file --source
+                    #
+                    # Note that `set -e` has already been set.
+                    return 0
+                    ;;
                 *)
                     usage "$PROG: unknown option '$1'"
                     ;;
