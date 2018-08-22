@@ -110,10 +110,10 @@ git_detail() {
 
     # If ref is a valid tag, keep it as is. Else, use a canonical ref.
     if ! is_git_tag "$ref"; then
-        ref=$(git rev-parse --short "$ref")
+        ref=$(git rev-parse --short "$ref" 2>/dev/null)
     fi
 
-    local short_ref=$(git rev-parse --short "$ref")
+    local short_ref=$(git rev-parse --short "$ref" 2>/dev/null)
     local url=${GIT_REMOTE_URL:-"$(git remote get-url origin)"}
 
     if [ -z "$url" ] || [ "${url//github/}" = "${url}" ]; then
@@ -126,11 +126,20 @@ git_detail() {
     local project=${project_git%%.git}
     local tarball="https://github.com/$user/$project/tarball/$ref"
 
+    echo "VALIDATE_THIS=$short_ref"
     echo "REF=$ref"
     echo "SHORT_REF=$short_ref"
     echo "GITHUB_USER=$user"
     echo "GITHUB_PROJECT=$project"
     echo "GITHUB_TARBALL=$tarball"
+}
+
+validate() {
+    # Validate output of `git_detail`.
+
+    if [ -z "$1" ]; then
+        usage "error: ref is invalid."
+    fi
 }
 
 generate_sha256() {
@@ -142,6 +151,7 @@ generate_sha256() {
     fi
 
     eval "$(git_detail "$1")"
+    validate "$VALIDATE_THIS"
 
     # Again... See README caveats of GitHub's tarball SHA256.
     local prefix="${GITHUB_USER}-${GITHUB_PROJECT}-${SHORT_REF}/"
@@ -161,6 +171,7 @@ generate_sha256_values() {
     fi
 
     eval "$(git_detail "$1")"
+    validate "$VALIDATE_THIS"
 
     echo "GITHUB_REF=$REF"
     echo -n "GITHUB_SHA256="
@@ -176,7 +187,10 @@ generate_qwerty_command() {
         return 2
     fi
 
-    eval "$(generate_sha256_values "$1")"
+    eval "$(git_detail "$1")"
+    validate "$VALIDATE_THIS"
+
+    eval "$(generate_sha256_values "$REF")"
 
     cat -<<EOF
 curl -sSL qwerty.sh |\\
