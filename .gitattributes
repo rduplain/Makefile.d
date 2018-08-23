@@ -1,0 +1,2 @@
+# Mark tests as "vendored" since they are external to the project itself.
+test/* linguist-vendored
