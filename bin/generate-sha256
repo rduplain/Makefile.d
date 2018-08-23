@@ -109,7 +109,7 @@ is_git_tag() {
 }
 
 git_detail() {
-    # Parse given ref & key GitHub details from git config.
+    # Parse given ref & key repo details from git config.
 
     if [ $# -ne 1 ]; then
         echo "usage: git_detail REF" >&2
@@ -139,9 +139,9 @@ git_detail() {
 
     echo "REF=$ref"
     echo "SHORT_REF=$short_ref"
-    echo "GITHUB_USER=$user"
-    echo "GITHUB_PROJECT=$project"
-    echo "GITHUB_TARBALL=$tarball"
+    echo "REPO_USER=$user"
+    echo "REPO_PROJECT=$project"
+    echo "REPO_TARBALL=$tarball"
 }
 
 generate_sha256() {
@@ -155,7 +155,7 @@ generate_sha256() {
     eval "$(git_detail "$1")"
 
     # Again... See README caveats of GitHub's tarball SHA256.
-    local prefix="${GITHUB_USER}-${GITHUB_PROJECT}-${SHORT_REF}/"
+    local prefix="${REPO_USER}-${REPO_PROJECT}-${SHORT_REF}/"
     git archive \
         --prefix="$prefix" \
         --format=tar.gz -6 "$REF" |\
@@ -173,10 +173,10 @@ generate_sha256_values() {
 
     eval "$(git_detail "$1")"
 
-    echo "GITHUB_REF=$REF"
-    echo -n "GITHUB_SHA256="
+    echo "REPO_REF=$REF"
+    echo -n "REPO_SHA256="
     generate_sha256 "$REF"
-    echo "GITHUB_TARBALL=$GITHUB_TARBALL"
+    echo "REPO_TARBALL=$REPO_TARBALL"
 }
 
 generate_qwerty_command() {
@@ -192,8 +192,8 @@ generate_qwerty_command() {
     cat -<<EOF
 curl -sSL qwerty.sh |\\
     sh -s - \\
-    --sha256=${GITHUB_SHA256} \\
-    ${GITHUB_TARBALL}
+    --sha256=${REPO_SHA256} \\
+    ${REPO_TARBALL}
 EOF
 }
 
