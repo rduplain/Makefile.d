@@ -85,6 +85,17 @@ warn_if_dirty_head() {
     fi
 }
 
+ref_exists() {
+    # Check that the ref exists.
+
+    if [ $# -ne 1 ]; then
+        echo "usage: ref_exists REF" >&2
+        return 2
+    fi
+
+    git rev-parse --short "$1" > /dev/null 2>&1
+}
+
 find_latest_git_tag() {
     # Find the latest git tag, for the current branch.
 
@@ -126,20 +137,11 @@ git_detail() {
     local project=${project_git%%.git}
     local tarball="https://github.com/$user/$project/tarball/$ref"
 
-    echo "VALIDATE_THIS=$short_ref"
     echo "REF=$ref"
     echo "SHORT_REF=$short_ref"
     echo "GITHUB_USER=$user"
     echo "GITHUB_PROJECT=$project"
     echo "GITHUB_TARBALL=$tarball"
-}
-
-validate() {
-    # Validate output of `git_detail`.
-
-    if [ -z "$1" ]; then
-        usage "error: ref is invalid."
-    fi
 }
 
 generate_sha256() {
@@ -151,7 +153,6 @@ generate_sha256() {
     fi
 
     eval "$(git_detail "$1")"
-    validate "$VALIDATE_THIS"
 
     # Again... See README caveats of GitHub's tarball SHA256.
     local prefix="${GITHUB_USER}-${GITHUB_PROJECT}-${SHORT_REF}/"
@@ -171,7 +172,6 @@ generate_sha256_values() {
     fi
 
     eval "$(git_detail "$1")"
-    validate "$VALIDATE_THIS"
 
     echo "GITHUB_REF=$REF"
     echo -n "GITHUB_SHA256="
@@ -187,10 +187,7 @@ generate_qwerty_command() {
         return 2
     fi
 
-    eval "$(git_detail "$1")"
-    validate "$VALIDATE_THIS"
-
-    eval "$(generate_sha256_values "$REF")"
+    eval "$(generate_sha256_values "$1")"
 
     cat -<<EOF
 curl -sSL qwerty.sh |\\
@@ -249,6 +246,10 @@ main() {
         else
             ref=HEAD
         fi
+    fi
+
+    if ! ref_exists "$ref"; then
+        usage "error: ref is invalid: $ref"
     fi
 
     warn_if_dirty_head "$ref"
