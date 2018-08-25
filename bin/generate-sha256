@@ -202,7 +202,7 @@ main() {
 
     given awk git openssl
 
-    local ref qwerty release
+    local ref checksum qwerty release
 
     while [ "$1" != "" ]; do
         if case $1 in "-"*) true;; *) false;; esac; then
@@ -210,6 +210,9 @@ main() {
             case "$1" in
                 -h | --help)
                     usage
+                    ;;
+                --checksum)
+                    checksum=true
                     ;;
                 --qwerty)
                     qwerty=true
@@ -254,10 +257,12 @@ main() {
 
     warn_if_dirty_head "$ref"
 
-    if [ -z "$qwerty" ]; then
-        generate_sha256_values "$ref"
-    else
+    if [ -n "$checksum" ]; then
+        generate_sha256 "$ref"
+    elif [ -n "$qwerty" ]; then
         generate_qwerty_command "$ref"
+    else
+        generate_sha256_values "$ref"
     fi
 }
 
