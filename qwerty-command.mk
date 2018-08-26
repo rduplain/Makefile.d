@@ -2,6 +2,11 @@
 
 DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+# Control output with GIT_REF and QWERTY_FLAGS environment:
+#
+#     GIT_REF=4e27204 QWERTY_FLAGS="--output=/tmp/foo.tar.gz --chmod=400" \
+#         make qwerty-command
+
 ifeq ($(GIT_REF),)
 GIT_REF := HEAD
 endif

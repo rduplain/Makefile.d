@@ -189,12 +189,15 @@ generate_qwerty_command() {
 
     eval "$(generate_sha256_values "$1")"
 
-    cat -<<EOF
-curl -sSL qwerty.sh |\\
-    sh -s - \\
-    --sha256=${REPO_SHA256} \\
-    ${REPO_TARBALL}
-EOF
+    echo "curl -sSL qwerty.sh |\\"
+    echo "    sh -s - \\"
+    echo "    --sha256=${REPO_SHA256} \\"
+
+    if [ -n "$QWERTY_FLAGS" ]; then
+        echo "    $QWERTY_FLAGS \\"
+    fi
+
+    echo "    ${REPO_TARBALL}"
 }
 
 main() {
