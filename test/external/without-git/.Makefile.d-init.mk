@@ -3,8 +3,8 @@ include .Makefile.d/path.mk
 define qwerty-Makefile.d
 curl -sSL qwerty.sh |\
 	sh -s - \
-	--sha256=6c75a7f055b49e2a53d8f44811a928351dbd1446ac4ae1d5bf828598a097dfd3 \
-	https://github.com/rduplain/Makefile.d/tarball/e2949bc |\
+	--sha256=b3101c600ebaacd95bdee37eafe81394329b19b73d04d3a0d7a079e9f1074cca \
+	https://github.com/rduplain/Makefile.d/tarball/a30fa71 |\
 			tar -xvzf - --strip-components=1
 endef
 

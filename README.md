@@ -48,6 +48,7 @@ The Makefile.d's 'master' branch is stable.
 Example, without git:
 
 * [test/external/without-git/Makefile](test/external/without-git/Makefile)
+* [.Makefile.d-init.mk](test/external/without-git/.Makefile.d-init.mk)
 
 The 'without-git' Makefile linked above shows how to install without using git,
 while still verifying integrity of the download. To compute the SHA256
