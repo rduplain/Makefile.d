@@ -24,6 +24,11 @@ export REQD_VAR    := $(REQD_DIR)/var
 
 REQD := $(REQD_BIN)/reqd
 
+# Accept space-delimited ordered recipe list to install when installing 'all'.
+ifeq ($(REQD_FIRST),)
+REQD_FIRST := all
+endif
+
 $(REQD): $(__FILE__) | curl-command
 	@rm -f $@
 	@curl -sSL qwerty.sh |\
@@ -34,3 +39,7 @@ $(REQD): $(__FILE__) | curl-command
 
 reqd-%: $(REQD)
 	@$(REQD) install $*
+
+reqd-all: $(REQD)
+	@$(REQD) install $(REQD_FIRST)
+	@$(REQD) install all
