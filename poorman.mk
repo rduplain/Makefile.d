@@ -10,8 +10,11 @@ POORMAN_VERSION := v0.6.2
 POORMAN_SHA256 := \
 	111ef96d243b1bd49aae65b12e50142d71007bc7aaf9719c257671e8cf585a35
 
+ifeq ($(POORMAN_OWNER),)
+POORMAN_OWNER := rduplain
+endif
+
 GITHUB_RAW := raw.githubusercontent.com
-GITHUB_USER := rduplain
 
 # Though poorman.mk is functional without reqd.mk,
 # it installs to reqd's conventional location.
@@ -23,7 +26,7 @@ $(POORMAN): $(__FILE__) | curl-command
 		sh -s - \
 		--sha256=$(POORMAN_SHA256) \
 		--output=$@ --chmod=a+x \
-		https://$(GITHUB_RAW)/$(GITHUB_USER)/poorman/$(POORMAN_VERSION)/poorman
+	https://$(GITHUB_RAW)/$(POORMAN_OWNER)/poorman/$(POORMAN_VERSION)/poorman
 
 # Replace command.mk's `poorman-command` to download poorman.
 poorman-command: $(POORMAN)

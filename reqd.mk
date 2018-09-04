@@ -9,8 +9,11 @@ include $(DIR)/path.mk
 REQD_VERSION := v2.1
 REQD_SHA256 := c29886329fe7e45771f12d8bd13af48c218448635a045904c72493742e0ad8e8
 
+ifeq ($(REQD_OWNER),)
+REQD_OWNER := rduplain
+endif
+
 GITHUB_RAW := raw.githubusercontent.com
-GITHUB_USER := rduplain
 
 export REQD_DIR    := $(PROJECT_ROOT)/.reqd
 export REQD_PREFIX := $(REQD_DIR)/usr
@@ -35,7 +38,7 @@ $(REQD): $(__FILE__) | curl-command
 		sh -s - \
 		--sha256=$(REQD_SHA256) \
 		--output=$@ --chmod=a+x \
-		https://$(GITHUB_RAW)/$(GITHUB_USER)/reqd/$(REQD_VERSION)/bin/reqd
+		https://$(GITHUB_RAW)/$(REQD_OWNER)/reqd/$(REQD_VERSION)/bin/reqd
 
 reqd-%: $(REQD)
 	@$(REQD) install $*
