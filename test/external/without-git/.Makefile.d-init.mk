@@ -1,9 +1,9 @@
 include .Makefile.d/path.mk
 
 # See Makefile.d project README to compute SHA256.
-MAKEFILE_D_VERSION := 4e27204
+MAKEFILE_D_VERSION := e2949bc
 MAKEFILE_D_SHA256 := \
-	3a681ef421c08791ff59546b5847c920c02be3081c6621428ec720af67a72929
+	6c75a7f055b49e2a53d8f44811a928351dbd1446ac4ae1d5bf828598a097dfd3
 MAKEFILE_D_URL := \
 	https://github.com/rduplain/Makefile.d/tarball/$(MAKEFILE_D_VERSION)
 
