@@ -6,8 +6,8 @@ DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
-REQD_VERSION := v2.1
-REQD_SHA256 := c29886329fe7e45771f12d8bd13af48c218448635a045904c72493742e0ad8e8
+REQD_VERSION := v2.2
+REQD_SHA256 := 2c10078193685919b7f0e15ff98a78236dbc179fcd509f885ff700d953a48ba8
 
 ifeq ($(REQD_OWNER),)
 REQD_OWNER := rduplain
