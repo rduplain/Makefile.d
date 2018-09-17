@@ -16,7 +16,7 @@ PYTHON_REQUIREMENTS := pip jeni==0.4.1
 
 ## Run Recipes w/Automated Requirements
 
-MAKEFILE := $(lastword $(MAKEFILE_LIST))
+PYTHON_REQUIREMENTS_MAKEFILE := $(lastword $(MAKEFILE_LIST))
 
 include .Makefile.d/command.mk
 include .Makefile.d/path.mk

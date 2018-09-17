@@ -56,13 +56,13 @@ python3-command: $(PYTHON) $(PIP_INSTALLED)
 # In Makefile:
 #
 #     REQUIREMENTS_TXT := requirements.txt     # or
-#     MAKEFILE := $(lastword $(MAKEFILE_LIST))
+#     PYTHON_REQUIREMENTS_MAKEFILE := $(lastword $(MAKEFILE_LIST))
 ifdef REQUIREMENTS_TXT
 $(PIP_INSTALLED): $(REQUIREMENTS_TXT)
 	@$(PIP) install --upgrade -r $(REQUIREMENTS_TXT)
 	@touch $@
-else ifdef MAKEFILE
-$(PIP_INSTALLED): $(MAKEFILE)
+else ifdef PYTHON_REQUIREMENTS_MAKEFILE
+$(PIP_INSTALLED): $(PYTHON_REQUIREMENTS_MAKEFILE)
 	@$(PIP) install --upgrade $(PYTHON_REQUIREMENTS)
 	@touch $@
 else
