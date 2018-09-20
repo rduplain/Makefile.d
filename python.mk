@@ -53,9 +53,13 @@ python3-command: $(PYTHON) $(PIP_INSTALLED)
 # will cause pip to reinstall requirements, which will allow the Makefile to
 # set PYTHON_REQUIREMENTS and have any changes to that variable take effect.
 #
-# In Makefile:
+# In a Makefile, before including this python.mk:
 #
-#     REQUIREMENTS_TXT := requirements.txt     # or
+#     REQUIREMENTS_TXT := requirements.txt
+#
+# ... or control the requirements directly in a Makefile variable:
+#
+#     REQUIREMENTS := pip==18.0 pyflakes
 #     PYTHON_REQUIREMENTS_MAKEFILE := $(lastword $(MAKEFILE_LIST))
 ifdef REQUIREMENTS_TXT
 $(PIP_INSTALLED): $(REQUIREMENTS_TXT)
