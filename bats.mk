@@ -18,6 +18,7 @@ BATS_ARCHIVE = bats-$(BATS_VERSION).tar.gz
 # Though bats.mk is functional without reqd.mk,
 # it installs to reqd's conventional location.
 BATS_SRC = $(PROJECT_ROOT)/.reqd/src/bats
+BATS_UNPACKED_PATH = $(BATS_SRC)/bats-$(BATS_VERSION)
 BATS_PREFIX = $(PROJECT_ROOT)/.reqd/opt/bats
 BATS = $(BATS_PREFIX)/bin/bats
 
@@ -28,9 +29,9 @@ bats-command: $(BATS)
 $(BATS): $(BATS_SRC)
 	@cd $(BATS_SRC)/bats-$(BATS_VERSION); ./install.sh $(BATS_PREFIX)
 
-$(BATS_SRC): $(BATS_SRC)/bats-$(BATS_VERSION)/README.md
+$(BATS_SRC): $(BATS_UNPACKED_PATH)/README.md
 
-$(BATS_SRC)/bats-$(BATS_VERSION)/README.md: $(BATS_SRC)/$(BATS_ARCHIVE)
+$(BATS_UNPACKED_PATH)/README.md: $(BATS_SRC)/$(BATS_ARCHIVE)
 	@cd $(BATS_SRC); tar -xvzf $(BATS_ARCHIVE)
 	@touch $@
 
