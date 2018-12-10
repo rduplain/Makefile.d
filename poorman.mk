@@ -6,15 +6,8 @@ DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
+POORMAN_URL := https://github.com/rduplain/poorman.git
 POORMAN_VERSION := v0.6.2
-POORMAN_SHA256 := \
-	111ef96d243b1bd49aae65b12e50142d71007bc7aaf9719c257671e8cf585a35
-
-ifeq ($(POORMAN_OWNER),)
-POORMAN_OWNER := rduplain
-endif
-
-GITHUB_RAW := raw.githubusercontent.com
 
 # Though poorman.mk is functional without reqd.mk,
 # it installs to reqd's conventional location.
@@ -22,11 +15,8 @@ POORMAN := $(PROJECT_ROOT)/.reqd/usr/bin/poorman
 
 $(POORMAN): $(__FILE__) | curl-command
 	@rm -f $@
-	@curl -sSL qwerty.sh |\
-		sh -s - \
-		--sha256=$(POORMAN_SHA256) \
-		--output=$@ --chmod=a+x \
-	https://$(GITHUB_RAW)/$(POORMAN_OWNER)/poorman/$(POORMAN_VERSION)/poorman
+	@curl -sSL qwerty.sh | sh -s - \
+		--tag $(POORMAN_VERSION) --chmod=a+x $(POORMAN_URL) poorman:$@
 
 # Replace command.mk's `poorman-command` to download poorman.
 poorman-command: $(POORMAN)
