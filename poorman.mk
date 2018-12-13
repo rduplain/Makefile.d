@@ -7,7 +7,7 @@ include $(DIR)/command.mk
 include $(DIR)/path.mk
 
 POORMAN_URL := https://github.com/rduplain/poorman.git
-POORMAN_VERSION := v0.6.2
+POORMAN_REV := v0.6.2
 
 # Though poorman.mk is functional without reqd.mk,
 # it installs to reqd's conventional location.
@@ -16,7 +16,7 @@ POORMAN := $(PROJECT_ROOT)/.reqd/usr/bin/poorman
 $(POORMAN): $(__FILE__) | curl-command
 	@rm -f $@
 	@curl -sSL qwerty.sh | sh -s - \
-		--tag $(POORMAN_VERSION) --chmod=a+x $(POORMAN_URL) poorman:$@
+		--tag $(POORMAN_REV) --chmod=a+x $(POORMAN_URL) poorman:$@
 
 # Replace command.mk's `poorman-command` to download poorman.
 poorman-command: $(POORMAN)
