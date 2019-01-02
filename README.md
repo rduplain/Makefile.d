@@ -119,4 +119,4 @@ Run tests:
 
 [build]: https://travis-ci.org/rduplain/Makefile.d.svg?branch=master
 
-Copyright (c) 2015-2018, Ron DuPlain. BSD licensed.
+Copyright (c) 2015-2019, Ron DuPlain. BSD licensed.
