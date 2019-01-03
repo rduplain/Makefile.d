@@ -6,4 +6,5 @@ test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 make -C "$test_dir"/external/with-git/ &&
 make -C "$test_dir"/external/without-git/ &&
 make -C "$test_dir" prove-python &&
-"$test_dir"/bin/test-make-run
+"$test_dir"/bin/test-make-run &&
+make -C "$test_dir"/cljs
