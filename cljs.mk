@@ -12,6 +12,7 @@
 
 DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+include $(DIR)/command.mk
 include $(DIR)/echo.mk
 include $(DIR)/path.mk
 
@@ -38,53 +39,56 @@ cljs-release-for-os: cljs-install cljs-test cljs-bin-for-os cljs-test-bin
 
 ### Clojure ###
 
-clj-%:
+clj-%: clojure-command
 	@clojure -A$*
 
 clj-install: .clj-install
 	@true # Override wildcard recipe.
 
-clj-test-refresh:
+clj-test-refresh: clojure-command
 	@clojure -Atest --watch src
 
-.clj-install: deps.edn
+.clj-install: deps.edn | clojure-command
 	@clojure -Stree
 	@touch $@
 
 
 ### Node.js ###
 
-npm-%:
+npm-%: npm-command
 	@npm $*
+
+npm-command: original-npm-command
+	@true # Override wildcard recipe.
 
 npm-install: .npm-install
 	@true # Override wildcard recipe.
 
-.npm-install: package.json
+.npm-install: package.json | npm-command
 	@npm install
 	@npm ls --depth=0
 	@touch $@
 
-shadow-cljs-%-app:
+shadow-cljs-%-app: npm-install
 	@./node_modules/.bin/shadow-cljs --force-spawn $* app
 
-shadow-cljs-repl-app:
+shadow-cljs-repl-app: npm-install
 	@echo "Run this in a separate terminal:"
 	@echo
 	@echo "    node ./target/$(CLJS_NAME).js"
 	@echo
 	@./node_modules/.bin/shadow-cljs --force-spawn cljs-repl app
 
-shadow-cljs-test: shadow-cljs-compile-test
+shadow-cljs-test: shadow-cljs-compile-test | npm-install
 	@node ./target/test.js
 
-shadow-cljs-%-test:
+shadow-cljs-%-test: npm-install
 	@./node_modules/.bin/shadow-cljs --force-spawn $* test -A:test
 
-shadow-cljs-%-test-refresh:
+shadow-cljs-%-test-refresh: npm-install
 	@./node_modules/.bin/shadow-cljs --force-spawn $* test-refresh -A:test
 
-pkg:
+pkg: npm-install
 	@echo "building binaries ..."
 	@./node_modules/.bin/pkg \
 		-c package.json \
@@ -92,7 +96,7 @@ pkg:
 		--out-path ./target/pkg \
 		./target/$(CLJS_NAME).js
 
-pkg-for-os:
+pkg-for-os: npm-install
 	@echo "building binary ..."
 	@./node_modules/.bin/pkg \
 		-c package.json \
