@@ -1,7 +1,7 @@
 __FILE__ := $(abspath $(lastword $(MAKEFILE_LIST)))
 
 MAKEFILE_D_URL := https://github.com/rduplain/Makefile.d.git
-MAKEFILE_D_REV := master
+MAKEFILE_D_REV := d9c21e7
 
 ifeq ($(QWERTY_SH),)
 QWERTY_SH := curl -sSL qwerty.sh | sh -s -

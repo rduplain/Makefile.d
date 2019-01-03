@@ -54,11 +54,12 @@ include .Makefile.d/path.mk
 ```
 
 That's it. Add `.Makefile.d` to the .gitignore or equivalent. By default,
-`.Makefile.d-init.mk` downloads the latest changes in the Makefile.d master
-branch; edit `MAKEFILE_D_REV` in the init .mk to select a different version of
-Makefile.d.
+`.Makefile.d-init.mk` downloads a fixed revision of Makefile.d. Select a
+different version by editing `MAKEFILE_D_REV` in the `.Makefile.d-init.mk`
+file. The project Makefile will re-download the local `.Makefile.d`
+installation automatically.
 
-The Makefile.d's 'master' branch is stable.
+The Makefile.d project's 'master' branch is stable.
 
 
 ### Usage
