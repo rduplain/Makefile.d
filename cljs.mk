@@ -16,7 +16,7 @@ include $(DIR)/command.mk
 include $(DIR)/echo.mk
 include $(DIR)/path.mk
 
-ifndef CLJS_NAME
+ifeq ($(CLJS_NAME),)
 $(error Set CLJS_NAME to basename of ClojureScript project.)
 endif
 
