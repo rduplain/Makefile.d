@@ -5,15 +5,10 @@ DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
 include $(DIR)/command.mk
 include $(DIR)/path.mk
+include $(DIR)/qwerty.mk
 
-REQD_VERSION := v2.2
-REQD_SHA256 := 2c10078193685919b7f0e15ff98a78236dbc179fcd509f885ff700d953a48ba8
-
-ifeq ($(REQD_OWNER),)
-REQD_OWNER := rduplain
-endif
-
-GITHUB_RAW := raw.githubusercontent.com
+REQD_URL := https://github.com/rduplain/reqd.git
+REQD_REV := v2.2
 
 export REQD_DIR    := $(PROJECT_ROOT)/.reqd
 export REQD_PREFIX := $(REQD_DIR)/usr
@@ -32,13 +27,11 @@ ifeq ($(REQD_FIRST),)
 REQD_FIRST := all
 endif
 
-$(REQD): $(__FILE__) | curl-command
-	@rm -f $@
-	@curl -sSL qwerty.sh |\
-		sh -s - \
-		--sha256=$(REQD_SHA256) \
-		--output=$@ --chmod=a+x \
-		https://$(GITHUB_RAW)/$(REQD_OWNER)/reqd/$(REQD_VERSION)/bin/reqd
+reqd-command: $(REQD)
+
+$(REQD): $(__FILE__)
+	$(QWERTY_SH) -f --chmod=a+x -o $(REQD_DIR) --tag $(REQD_REV) $(REQD_URL) \
+		bin/reqd
 
 reqd-%: $(REQD)
 	@$(REQD) install $*
