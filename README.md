@@ -37,26 +37,6 @@ developer has every tool already installed. At the very least, a failed build
 can indicate which programs are missing.
 
 
-### Usage
-
-Add include statements to the project's Makefile, e.g.:
-
-```Makefile
-include .Makefile.d/path.mk
-```
-
-Use variables and recipe patterns respective to included files. See
-[test/Makefile](test/Makefile) for example usage.
-
-
-### Platform Support
-
-This project is cross-platform for Unix systems -- GNU/Linux, Mac OS X, ... --
-as long as the Makefile is being run by GNU Make 3.81+, where 3.81 has a
-release date in 2006. Specifically, these includes are not portable to non-GNU
-implementations of Make (e.g. BSD Make) given dynamic features in use.
-
-
 ### Installation
 
 Download `.Makefile.d-init.mk` to the project root:
@@ -79,6 +59,26 @@ branch; edit `MAKEFILE_D_REV` in the init .mk to select a different version of
 Makefile.d.
 
 The Makefile.d's 'master' branch is stable.
+
+
+### Usage
+
+Add include statements to the project's Makefile, e.g.:
+
+```Makefile
+include .Makefile.d/path.mk
+```
+
+Use variables and recipe patterns respective to included files. See
+[test/Makefile](test/Makefile) for example usage.
+
+
+### Platform Support
+
+This project is cross-platform for Unix systems -- GNU/Linux, Mac OS X, ... --
+as long as the Makefile is being run by GNU Make 3.81+, where 3.81 has a
+release date in 2006. Specifically, these includes are not portable to non-GNU
+implementations of Make (e.g. BSD Make) given dynamic features in use.
 
 
 ### Tests
