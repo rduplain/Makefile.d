@@ -6,8 +6,8 @@ set -e
 test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
 general() {
-    make -C "$test_dir"/external/with-qwerty/
-    make -C "$test_dir"/external/with-git/
+    make -C "$test_dir"/external/with-qwerty
+    make -C "$test_dir"/external/with-git
 }
 
 python() {
