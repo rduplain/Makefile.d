@@ -7,8 +7,7 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
-# Though python.mk is functional without reqd.mk,
-# it installs to reqd's conventional location.
+# reqd is not required, but use its conventional location.
 PYTHON_ENV_NAME := python
 PYTHON_ENV := $(PROJECT_ROOT)/.reqd/opt/$(PYTHON_ENV_NAME)
 PYTHON := $(PYTHON_ENV)/bin/python
@@ -19,10 +18,6 @@ PIP_INSTALLED := $(PYTHON_ENV)/bin/.pip-installed
 
 # Provide a space delimited list of requirements with PYTHON_REQUIREMENTS.
 # Defaults to pip as a no-op.
-#
-# Note that when PYTHON_REQUIREMENTS is set in a project Makefile, the change
-# is not automatically detected. Run `make python-requirements` to install
-# updates after changing this variable.
 ifeq ($(PYTHON_REQUIREMENTS),)
 PYTHON_REQUIREMENTS := pip
 endif
