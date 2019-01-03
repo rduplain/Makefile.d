@@ -53,7 +53,7 @@ make_run() {
     # Run code under test.
 
     # Note that poorman is running in same process group.
-    POORMAN_SELECTIVE_KILL=true make 2>&1 | log
+    POORMAN_SELECTIVE_KILL=true make -C "$@" 2>&1 | log
 }
 
 main() {
@@ -62,7 +62,7 @@ main() {
     # Given POORMAN_SELECTIVE_KILL=true, send a signal to redis-server.
     trap 'pkill redis-server > /dev/null 2>&1' INT TERM EXIT
 
-    if make_run; then
+    if make_run "$@"; then
         green 'Test passed.'
         return 0
     else

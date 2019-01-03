@@ -12,8 +12,8 @@ general() {
 }
 
 python() {
-    make -C "$test_dir" prove-python
-    "$test_dir"/bin/test-make-run
+    make -C "$test_dir"/python prove-python
+    "$test_dir"/bin/test-make-run python
 }
 
 cljs() {
