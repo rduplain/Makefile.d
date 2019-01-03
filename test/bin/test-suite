@@ -1,10 +1,32 @@
 #!/usr/bin/env bash
 # Run all tests. Stop on first test failure to avoid overlooking issues.
 
+set -e
+
 test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
-make -C "$test_dir"/external/with-git/ &&
-make -C "$test_dir"/external/without-git/ &&
-make -C "$test_dir" prove-python &&
-"$test_dir"/bin/test-make-run &&
-make -C "$test_dir"/cljs
+general() {
+    make -C "$test_dir"/external/with-git/
+    make -C "$test_dir"/external/without-git/
+}
+
+python() {
+    make -C "$test_dir" prove-python
+    "$test_dir"/bin/test-make-run
+}
+
+cljs() {
+    make -C "$test_dir"/cljs
+}
+
+main() {
+    if [ $# -eq 0 ]; then
+        set -- general python cljs
+    fi
+
+    for test in $@; do
+        $test
+    done
+}
+
+main "$@"

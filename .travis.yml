@@ -1,22 +1,79 @@
-language: generic
+# GENERATED FILE - DO NOT EDIT
+#
+# Generate with `bash .travis.yml.bash > .travis.yml`.
+
 matrix:
   include:
     - os: linux
       language: python
       python: 3.4
+      install:
+        - make --version; true # GNU
+        - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
+      before_script:
+        - type -t deactivate && deactivate || true # Deactivate virtualenv.
+        - export PATH=/opt/python/3.4/bin:$PATH
+        - which make python
+      script:
+        - ./test/bin/test-suite general python
+      cache:
+        directories:
+          - ~/.cache/pip
+          - ./test/.reqd/src
     - os: osx
       language: generic
-before_install:
-  - which make
-  - make --version; true # GNU
-  - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
-  - ./test/bin/prep-ci
-before_script:
-  # Escape virtualenv, https://github.com/travis-ci/travis-ci/issues/8589.
-  - type -t deactivate && deactivate || true
-  - export PATH=/opt/python/3.4/bin:$PATH
-script:
-  - ./test/bin/test-suite
+      addons:
+        homebrew:
+          packages: python3
+      install:
+        - make --version; true # GNU
+        - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
+      before_script:
+        - type -t deactivate && deactivate || true # Deactivate virtualenv.
+        - which make python
+      script:
+        - ./test/bin/test-suite general python
+      cache:
+        directories:
+          - ~/Library/Caches/pip
+          - ./test/.reqd/src
+    - os: linux
+      language: node_js
+      node_js: lts/*
+      addons:
+        apt:
+          packages: rlwrap
+      install:
+        - export PATH=/opt/clj/bin:"$PATH"
+        - if ! which clojure; then curl https://download.clojure.org/install/linux-install-1.9.0.358.sh | sudo bash -s - -p /opt/clj; fi
+        - which make java clojure node npm
+      script:
+        - ./test/bin/test-suite cljs
+      cache:
+        directories:
+          - ~/.m2
+          - ~/.npm
+          - ~/.pkg-cache
+          - .cpcache
+          - node_modules
+          - /opt/clj
+    - os: osx
+      language: node_js
+      node_js: lts/*
+      addons:
+        homebrew:
+          packages: clojure
+      install:
+        - which make java clojure node npm
+      script:
+        - ./test/bin/test-suite cljs
+      cache:
+        directories:
+          - ~/.m2
+          - ~/.npm
+          - ~/.pkg-cache
+          - .cpcache
+          - node_modules
 notifications:
   email:
     on_success: never
