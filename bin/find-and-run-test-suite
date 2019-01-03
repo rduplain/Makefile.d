@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Run nearby `run-test-suite`, finding arguments given project root.
+
+# Program variables:
+declare PROG                      # Name of this test program.
+declare TARGET                    # Path to project-built 'target' directory.
+declare TEST_SUITE                # Path to test-suite program.
+
+find_target() {
+    # Find path to project-built 'target' directory.
+
+    if [ -d "$PROJECT_ROOT/target" ]; then
+        TARGET="$PROJECT_ROOT/target"
+    else
+        echo "$PROG: No 'target' directory found in $PROJECT_ROOT." >&2
+        return 2
+    fi
+}
+
+find_test_suite() {
+    # Find path to test-suite program.
+
+    if [ -x "$PROJECT_ROOT/test/bash/test-suite" ]; then
+        TEST_SUITE="$PROJECT_ROOT/test/bash/test-suite"
+    elif [ -x "$PROJECT_ROOT/test/bash/test_suite" ]; then
+        TEST_SUITE="$PROJECT_ROOT/test/bash/test_suite"
+    else
+        echo "$PROG: No test suite found in $PROJECT_ROOT." >&2
+        return 2
+    fi
+}
+
+main() {
+    # Find arguments given project root and call `run-test-suite`.
+
+    # Exit immediately if a command error or non-zero return occurs.
+    set -e
+
+    # The name of this test program.
+    PROG="$( basename "${BASH_SOURCE[0]}" )"
+
+    if [ $# -ne 1 ]; then
+        exec >&2 # Redirect all further stdout to stderr.
+
+        echo "usage: $PROG PROJECT_ROOT"
+        return 2
+    fi
+
+    PROJECT_ROOT="$1"
+    shift
+
+    # Find directory containing this test program.
+    local dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+    # Find `run-test-suite` arguments given PROJECT_ROOT.
+    find_target
+    find_test_suite
+
+    # Change working directory for convenience to downstream programs.
+    cd "$PROJECT_ROOT"
+
+    # Hand off.
+    exec "$dir"/run-test-suite "$TARGET" "$TEST_SUITE"
+}
+
+main "$@"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run tests against binary packaged for the present platform.
+# Run test suite, first resolving project-built binary for present platform.
 
 # Required environment variables:
 #
@@ -12,6 +12,7 @@ declare EXE                       # Path to project-built platform binary.
 # Program variables:
 declare PROG                      # Name of this test program.
 declare TARGET                    # Path to project-built 'target' directory.
+declare TEST_SUITE                # Path to test-suite program.
 
 assert_equal() {
     # Assert strings are equal.
@@ -70,20 +71,32 @@ main() {
     # The name of this test program.
     PROG="$( basename "${BASH_SOURCE[0]}" )"
 
-    # Test required environment variables.
-    if [ -z "$NAME" ]; then
-        echo "$PROG: set NAME with project name, matching exe basename." >&2
+    if [ $# -ne 2 ]; then
+        exec >&2 # Redirect all further stdout to stderr.
+
+        echo "usage: $PROG TARGET_PATH TEST_SUITE"
+        echo
+        echo "TARGET_PATH         Path to project-built 'target' directory."
+        echo "TEST_SUITE          Path to test-suite program."
+        echo
+        echo "Set environment:"
+        echo
+        echo "NAME                Name of the project, matching exe basename."
+        echo
+        echo "The test-suite program is given these environment variables:"
+        echo
+        echo "EXE                 Path to project-built platform binary."
+        echo "assert_equal        A bash function to assert strings are equal."
         return 2
     fi
 
-    # Find directory containing this test program.
-    local dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    TARGET="$1"
+    TEST_SUITE="$2"
+    shift 2
 
-    # Find root directory containing project-built binaries.
-    TARGET="$( cd -P "$dir"/../../target && pwd )"
-
-    if [ -z "$TARGET" ]; then
-        echo "$PROG: cannot find project-built 'target' directory." >&2
+    # Test required environment variables.
+    if [ -z "$NAME" ]; then
+        echo "$PROG: set NAME with project name, matching exe basename." >&2
         return 2
     fi
 
@@ -95,7 +108,7 @@ main() {
     export -f assert_equal
 
     # Run test suite.
-    exec "$dir"/test_suite
+    exec "$TEST_SUITE"
 }
 
 main "$@"

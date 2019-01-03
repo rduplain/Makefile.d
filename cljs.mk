@@ -1,18 +1,39 @@
+# Provide ClojureScript workflow using Clojure CLI, Node.js/npm, & shadow-cljs.
+#
+# Set CLJS_NAME to the basename of the ClojureScript project, i.e. the name
+# matching BASENAME.js build output and the name of the pkg-built executable.
+#
+# Supporting files to include at PROJECT_ROOT:
+#
+# * deps.edn with Clojure/ClojureScript dependencies and :test alias which adds
+#   test path(s) to :extra-paths.
+# * package.json with npm dependencies.
+# * shadow-cljs.edn with :app, :test, and :test-refresh builds.
+
+DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+
+include $(DIR)/echo.mk
+include $(DIR)/path.mk
+
+ifndef CLJS_NAME
+$(error Set CLJS_NAME to basename of ClojureScript project.)
+endif
+
+
 ### Recipes ###
 
-all: release
-bin: install build pkg-renamed
-build: install echo-building shadow-cljs-release-app
-install: echo-clj clj-install echo-npm npm-install
-outdated: install clj-outdated npm-outdated
-release: install test bin test-bin
-repl: install shadow-cljs-repl-app
-test-refresh: install shadow-cljs-watch-test-refresh
-test: install echo-testing shadow-cljs-test
+cljs-bin: cljs-install cljs-build pkg-renamed
+cljs-build: cljs-install echo-building shadow-cljs-release-app
+cljs-install: echo-clj clj-install echo-npm npm-install
+cljs-outdated: cljs-install clj-outdated npm-outdated
+cljs-release: cljs-install cljs-test cljs-bin cljs-test-bin
+cljs-repl: cljs-install shadow-cljs-repl-app
+cljs-test-refresh: cljs-install shadow-cljs-watch-test-refresh
+cljs-test: cljs-install echo-testing shadow-cljs-test
 
-# Build a binary for FreeBSD using `make release-for-os` on a FreeBSD system.
-bin-for-os: install build pkg-for-os
-release-for-os: install test bin-for-os test-bin
+# Build a binary for FreeBSD using `cljs-release-for-os` on a FreeBSD system.
+cljs-bin-for-os: cljs-install cljs-build pkg-for-os
+cljs-release-for-os: cljs-install cljs-test cljs-bin-for-os cljs-test-bin
 
 
 ### Clojure ###
@@ -50,7 +71,7 @@ shadow-cljs-%-app:
 shadow-cljs-repl-app:
 	@echo "Run this in a separate terminal:"
 	@echo
-	@echo "    node ./target/hello.js"
+	@echo "    node ./target/$(CLJS_NAME).js"
 	@echo
 	@./node_modules/.bin/shadow-cljs --force-spawn cljs-repl app
 
@@ -69,35 +90,29 @@ pkg:
 		-c package.json \
 		-t node10-alpine-x64,node10-linux-x64,node10-mac-x64,node10-win-x64 \
 		--out-path ./target/pkg \
-		./target/hello.js
+		./target/$(CLJS_NAME).js
 
 pkg-for-os:
 	@echo "building binary ..."
 	@./node_modules/.bin/pkg \
 		-c package.json \
 		-t node10 \
-		--output ./target/hello \
-		./target/hello.js
+		--output ./target/$(CLJS_NAME) \
+		./target/$(CLJS_NAME).js
 
 pkg-renamed: pkg
 	@mkdir -p ./target/bin-alpine
-	@mv ./target/pkg/hello-alpine ./target/bin-alpine/hello
+	@mv ./target/pkg/$(CLJS_NAME)-alpine ./target/bin-alpine/$(CLJS_NAME)
 	@mkdir -p ./target/bin-linux
-	@mv ./target/pkg/hello-linux ./target/bin-linux/hello
+	@mv ./target/pkg/$(CLJS_NAME)-linux ./target/bin-linux/$(CLJS_NAME)
 	@mkdir -p ./target/bin-mac
-	@mv ./target/pkg/hello-macos ./target/bin-mac/hello
+	@mv ./target/pkg/$(CLJS_NAME)-macos ./target/bin-mac/$(CLJS_NAME)
 	@mkdir -p ./target/bin-windows
-	@mv ./target/pkg/hello-win.exe ./target/bin-windows/hello.exe
+	@mv ./target/pkg/$(CLJS_NAME)-win.exe ./target/bin-windows/$(CLJS_NAME).exe
 	@rm -fr ./target/pkg/
 	@echo "-- redistributable binaries --"
 	@find ./target/bin-* -type f | sort
 
-test-bin:
+cljs-test-bin:
 	@echo "-- testing redistributable binary --"
-	@NAME=hello bash ./test/bash/test_bin
-
-
-### Utility ###
-
-echo-%:
-	@echo "$* ..."
+	@env NAME=$(CLJS_NAME) $(DIR)/bin/find-and-run-test-suite $(PROJECT_ROOT)
