@@ -5,17 +5,17 @@ DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 # Control output with GIT_REF and QWERTY_FLAGS environment:
 #
 #     GIT_REF=4e27204 QWERTY_FLAGS="--output=/tmp/foo.tar.gz --chmod=400" \
-#         make qwerty-command
+#         make qwerty-archive
 
-ifeq ($(GIT_REF),)
-GIT_REF := HEAD
+ifeq ($(GIT_REV),)
+GIT_REV := HEAD
 endif
 
 archive-sha256:
-	@$(DIR)/bin/generate-sha256 --checksum $(GIT_REF)
+	@$(DIR)/bin/generate-sha256 --checksum $(GIT_REV)
 
-qwerty-command:
-	@$(DIR)/bin/generate-sha256 --qwerty $(GIT_REF)
+qwerty-archive:
+	@$(DIR)/bin/generate-sha256 --qwerty $(GIT_REV)
 
-qwerty-command-release:
+qwerty-archive-release:
 	@$(DIR)/bin/generate-sha256 --qwerty --release
