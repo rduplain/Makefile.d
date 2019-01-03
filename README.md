@@ -70,7 +70,8 @@ include .Makefile.d/path.mk
 ```
 
 Use variables and recipe patterns respective to included files. See
-[test/Makefile](test/Makefile) for example usage.
+[test/Makefile](test/Makefile) and [test/cljs/Makefile](test/cljs/Makefile) for
+example usage.
 
 
 ### Platform Support
