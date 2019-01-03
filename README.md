@@ -31,8 +31,8 @@ Example use cases include:
 * Integrating open-source services by _running a reliable development
   environment of those services entirely in one command_.
 
-Each example is possible with a single `make` invocation on a newly cloned
-project. The goal is to provide repeatable builds without assuming the
+Each example use case is possible with a single `make` invocation on a newly
+cloned project. The goal is to provide repeatable builds without assuming the
 developer has every tool already installed. At the very least, a failed build
 can indicate which programs are missing.
 
