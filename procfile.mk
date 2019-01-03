@@ -1,6 +1,6 @@
 # Generate a Procfile dynamically, with process entry points in make.
 
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/path.mk
 

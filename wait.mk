@@ -1,6 +1,6 @@
 # Wait for a TCP port to open as a dependency target.
 
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/command.mk
 

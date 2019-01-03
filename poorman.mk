@@ -1,7 +1,7 @@
 # Provide poorman to run a Procfile.
 
 __FILE__ := $(lastword $(MAKEFILE_LIST))
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 POORMAN_URL := https://github.com/rduplain/poorman.git
 POORMAN_REV := v0.6.2

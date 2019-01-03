@@ -2,7 +2,7 @@
 #
 # Supports Python 3.4+.
 
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/command.mk
 include $(DIR)/path.mk

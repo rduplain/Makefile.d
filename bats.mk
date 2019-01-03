@@ -1,7 +1,7 @@
 # Provide bats testing framework.
 
 __FILE__ := $(lastword $(MAKEFILE_LIST))
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 BATS_URL := https://github.com/sstephenson/bats.git
 BATS_REV := v0.4.0

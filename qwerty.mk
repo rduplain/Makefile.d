@@ -1,6 +1,6 @@
 # Provide qwerty.sh command via $(QWERTY_SH).
 
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/command.mk
 

@@ -1,6 +1,6 @@
 # Print qwerty.sh command invocations to download the project.
 
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 # Control output with GIT_REF and QWERTY_FLAGS environment:
 #

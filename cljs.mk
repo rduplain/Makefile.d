@@ -10,7 +10,7 @@
 # * package.json with npm dependencies.
 # * shadow-cljs.edn with :app, :test, and :test-refresh builds.
 
-DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/command.mk
 include $(DIR)/echo.mk
