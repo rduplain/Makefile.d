@@ -43,7 +43,7 @@ Download `.Makefile.d-init.mk` to the project root:
 
 ```bash
 curl -sSL qwerty.sh |\
-    sh -s - https://github.com/rduplain/Makefile.d.git .Makefile.d-init.mk`
+    sh -s - https://github.com/rduplain/Makefile.d.git .Makefile.d-init.mk
 ```
 
 Include this .mk in the project Makefile, then include any .Makefile.d file:
