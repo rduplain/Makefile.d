@@ -59,51 +59,26 @@ implementations of Make (e.g. BSD Make) given dynamic features in use.
 
 ### Installation
 
-Add `.Makefile.d` to a project's .gitignore, or similar, and create a recipe in
-the project's Makefile to download .Makefile.d (changing 'master' to a release
-tag as desired):
+Download `.Makefile.d-init.mk` to the project root:
+
+```bash
+curl -sSL qwerty.sh |\
+    sh -s - https://github.com/rduplain/Makefile.d.git .Makefile.d-init.mk`
+```
+
+Include this .mk in the project Makefile, then include any .Makefile.d file:
 
 ```Makefile
-.Makefile.d/%.mk:
-	@git clone -b master https://github.com/rduplain/Makefile.d.git .Makefile.d
+include .Makefile.d-init.mk
+include .Makefile.d/path.mk
 ```
 
-This will automatically download .Makefile.d to support include statements.
-
-Example, with git:
-
-* [test/external/with-git/Makefile](test/external/with-git/Makefile)
+That's it. Add `.Makefile.d` to the .gitignore or equivalent. By default,
+`.Makefile.d-init.mk` downloads the latest changes in the Makefile.d master
+branch; edit `MAKEFILE_D_REV` in the init .mk to select a different version of
+Makefile.d.
 
 The Makefile.d's 'master' branch is stable.
-
-
-### Installation Without `git`
-
-Example, without git:
-
-* [test/external/without-git/Makefile](test/external/without-git/Makefile)
-* [.Makefile.d-init.mk](test/external/without-git/.Makefile.d-init.mk)
-
-The 'without-git' Makefile linked above shows how to install without using git,
-while still verifying integrity of the download. To compute the SHA256
-checksum, use git in a development environment. First `git checkout` the ref of
-interest. Then, run the following command line to get a SHA256 checksum.
-
-Note that this assumes GitHub provides tarballs with gzip compression level 6,
-which is true as of the time of this writing, but is an undocumented
-implementation detail. Further, this assumes a tarball prefix directory using
-the GitHub username and project name, followed by `git rev-parse` with the
-short format, which is also an implementation detail.
-
-```sh
-./bin/generate-sha256
-```
-
-Optionally provide a ref:
-
-```sh
-./bin/generate-sha256 f8f0b3a
-```
 
 
 ### Tests
