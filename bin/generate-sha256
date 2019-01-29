@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # Generate SHA256 of a git ref, defaulting to current git HEAD.
-#
-# See README caveats of GitHub's tarball SHA256.
 
 # Exit immediately if a command error or non-zero return occurs.
 set -e
