@@ -33,8 +33,8 @@ Example use cases include:
 
 Each example use case is possible with a single `make` invocation on a newly
 cloned project. The goal is to provide repeatable builds without assuming the
-developer has every tool already installed. At the very least, a failed build
-can indicate which programs are missing.
+developer has every tool already installed. (At the very least, a failed build
+can indicate which programs are missing.)
 
 
 ### Installation
@@ -53,7 +53,7 @@ include .Makefile.d-init.mk
 include .Makefile.d/path.mk
 ```
 
-That's it. Add `.Makefile.d` to the .gitignore or equivalent. By default,
+That's it. Add `.Makefile.d` to .gitignore or equivalent. By default,
 `.Makefile.d-init.mk` downloads a fixed revision of Makefile.d. Select a
 different version by editing `MAKEFILE_D_REV` in the `.Makefile.d-init.mk`
 file. The project Makefile will re-download the local `.Makefile.d`
