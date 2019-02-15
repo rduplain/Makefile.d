@@ -8,7 +8,8 @@
 A sensational description would say, "Give a Makefile super powers!" but that
 would be too much. There is already a project to provide a standard library for
 GNU Make ([GMSL](https://gmsl.sourceforge.io/)), and _this_ Makefile.d project
-does not provide a standard library.
+does not provide a standard library. Besides, a simple Makefile is already
+powerful; the work is to keep it simple.
 
 The Makefile.d project provides a readily installable directory of .mk files
 which together provide a programming environment for multiple runtimes.
