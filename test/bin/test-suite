@@ -20,9 +20,13 @@ python() {
     "$test_dir"/bin/test-make-run python
 }
 
+ruby() {
+    make -C "$test_dir"/ruby
+}
+
 main() {
     if [ $# -eq 0 ]; then
-        set -- general cljs python
+        set -- general cljs python ruby
     fi
 
     for test in $@; do
