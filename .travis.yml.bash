@@ -6,6 +6,8 @@
 # language directives results in an error of "Could not parse .travis.yml".
 #
 # Accordingly, generate the matrix.
+#
+#     bash .travis.yml.bash > .travis.yml
 
 main() {
     header
