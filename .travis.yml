@@ -39,6 +39,26 @@ matrix:
           - ~/Library/Caches/pip
           - ./test/.reqd/src
     - os: linux
+      language: ruby
+      rvm: 2.6.3
+      install:
+        - make --version; true # GNU
+        - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
+      before_script:
+        - which make ruby
+      script:
+        - ./test/bin/test-suite ruby
+    - os: osx
+      language: ruby
+      rvm: 2.6.3
+      install:
+        - make --version; true # GNU
+        - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
+      before_script:
+        - which make ruby
+      script:
+        - ./test/bin/test-suite ruby
+    - os: linux
       language: node_js
       node_js: lts/*
       addons:

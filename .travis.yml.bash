@@ -13,6 +13,8 @@ main() {
     header
     python linux
     python osx
+    ruby linux
+    ruby osx
     cljs linux
     cljs osx
     footer
@@ -71,6 +73,23 @@ osx                                                            $os && cat <<___
 ___
 all                                                            $os && cat <<___
           - ./test/.reqd/src
+___
+}
+
+ruby() {
+os=$1
+
+all                                                            $os && cat <<___
+    - os: $os
+      language: ruby
+      rvm: 2.6.3
+      install:
+        - make --version; true # GNU
+        - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
+      before_script:
+        - which make ruby
+      script:
+        - ./test/bin/test-suite ruby
 ___
 }
 
