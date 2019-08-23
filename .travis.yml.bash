@@ -44,6 +44,7 @@ osx                                                            $os && cat <<___
       addons:
         homebrew:
           packages: python3
+          update: true
 ___
 all                                                            $os && cat <<___
       install:
@@ -89,6 +90,7 @@ ___
 osx                                                            $os && cat <<___
         homebrew:
           packages: clojure
+          update: true
 ___
 all                                                            $os && cat <<___
       install:

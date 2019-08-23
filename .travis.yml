@@ -25,6 +25,7 @@ matrix:
       addons:
         homebrew:
           packages: python3
+          update: true
       install:
         - make --version; true # GNU
         - make -V MAKE_VERSION 2>/dev/null; true # BSD (not supported)
@@ -63,6 +64,7 @@ matrix:
       addons:
         homebrew:
           packages: clojure
+          update: true
       install:
         - which make java clojure node npm
       script:
