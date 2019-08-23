@@ -19,7 +19,7 @@ matrix:
       cache:
         directories:
           - ~/.cache/pip
-          - ./test/.reqd/src
+          - ./test/python/.reqd/src
     - os: osx
       language: generic
       addons:
@@ -37,7 +37,7 @@ matrix:
       cache:
         directories:
           - ~/Library/Caches/pip
-          - ./test/.reqd/src
+          - ./test/python/.reqd/src
     - os: linux
       language: ruby
       rvm: 2.6.3

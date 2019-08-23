@@ -72,7 +72,7 @@ osx                                                            $os && cat <<___
           - ~/Library/Caches/pip
 ___
 all                                                            $os && cat <<___
-          - ./test/.reqd/src
+          - ./test/python/.reqd/src
 ___
 }
 
