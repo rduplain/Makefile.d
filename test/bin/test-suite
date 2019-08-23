@@ -11,18 +11,18 @@ general() {
     make -C "$test_dir"/misc
 }
 
+cljs() {
+    make -C "$test_dir"/cljs
+}
+
 python() {
     make -C "$test_dir"/python prove-python
     "$test_dir"/bin/test-make-run python
 }
 
-cljs() {
-    make -C "$test_dir"/cljs
-}
-
 main() {
     if [ $# -eq 0 ]; then
-        set -- general python cljs
+        set -- general cljs python
     fi
 
     for test in $@; do
