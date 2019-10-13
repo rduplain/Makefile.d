@@ -6,6 +6,12 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 POORMAN_URL ?= https://github.com/rduplain/poorman.git
 POORMAN_REV ?= v0.6.2
 
+ifeq ($(POORMAN_REV_DETACHED),true)
+POORMAN_REV_SPEC ?= --ref $(POORMAN_REV)
+else
+POORMAN_REV_SPEC ?= --tag $(POORMAN_REV)
+endif
+
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
 
@@ -18,4 +24,4 @@ poorman-command: $(POORMAN)
 
 $(POORMAN): $(__FILE__)
 	@rm -f $@
-	$(QWERTY_SH) --tag $(POORMAN_REV) --chmod=a+x $(POORMAN_URL) poorman:$@
+	$(QWERTY_SH) $(POORMAN_REV_SPEC) --chmod=a+x $(POORMAN_URL) poorman:$@

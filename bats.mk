@@ -6,6 +6,12 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 BATS_URL ?= https://github.com/sstephenson/bats.git
 BATS_REV ?= v0.4.0
 
+ifeq ($(BATS_REV_DETACHED),true)
+BATS_REV_SPEC ?= --ref $(BATS_REV)
+else
+BATS_REV_SPEC ?= --tag $(BATS_REV)
+endif
+
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
 
@@ -19,6 +25,6 @@ bats-command: $(BATS)
 	@true
 
 $(BATS): $(__FILE__)
-	$(QWERTY_SH) -f -o $(BATS_SRC) --tag $(BATS_REV) $(BATS_URL)
+	$(QWERTY_SH) -f -o $(BATS_SRC) $(BATS_REV_SPEC) $(BATS_URL)
 	cd $(BATS_SRC); ./install.sh $(BATS_PREFIX)
 	touch $@

@@ -10,6 +10,12 @@ include $(DIR)/qwerty.mk
 REQD_URL ?= https://github.com/rduplain/reqd.git
 REQD_REV ?= v2.2
 
+ifeq ($(REQD_REV_DETACHED),true)
+REQD_REV_SPEC ?= --ref $(REQD_REV)
+else
+REQD_REV_SPEC ?= --tag $(REQD_REV)
+endif
+
 export REQD_DIR    := $(PROJECT_ROOT)/.reqd
 export REQD_PREFIX := $(REQD_DIR)/usr
 export REQD_BIN    := $(REQD_DIR)/bin
@@ -32,7 +38,7 @@ endif
 reqd-command: $(REQD)
 
 $(REQD): $(__FILE__)
-	$(QWERTY_SH) -f --chmod=a+x -o $(REQD_DIR) --tag $(REQD_REV) $(REQD_URL) \
+	$(QWERTY_SH) -f --chmod=a+x -o $(REQD_DIR) $(REQD_REV_SPEC) $(REQD_URL) \
 		bin/reqd
 
 reqd-%: $(REQD)
