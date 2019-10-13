@@ -9,7 +9,6 @@ POORMAN_REV ?= v0.6.2
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
 
-# reqd is not required, but use its conventional location.
 POORMAN := $(PROJECT_ROOT)/.reqd/usr/bin/poorman
 
 export PATH := $(PROJECT_ROOT)/.reqd/usr/bin:$(PATH)

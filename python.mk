@@ -7,7 +7,6 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
-# reqd is not required, but use its conventional location.
 PYTHON_ENV_NAME := python
 PYTHON_ENV := $(PROJECT_ROOT)/.reqd/opt/$(PYTHON_ENV_NAME)
 PYTHON := $(PYTHON_ENV)/bin/python

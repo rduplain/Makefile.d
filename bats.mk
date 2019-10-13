@@ -9,7 +9,6 @@ BATS_REV ?= v0.4.0
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
 
-# reqd is not required, but use its conventional location.
 BATS_SRC = $(PROJECT_ROOT)/.reqd/src/bats/$(BATS_REV)
 BATS_PREFIX = $(PROJECT_ROOT)/.reqd/opt/bats
 BATS = $(BATS_PREFIX)/bin/bats

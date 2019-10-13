@@ -9,7 +9,6 @@ JANET_REV ?= v1.3.1
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
 
-# reqd is not required, but use its conventional location.
 JANET_SRC = $(PROJECT_ROOT)/.reqd/src/janet/$(JANET_REV)
 JANET_PREFIX = $(PROJECT_ROOT)/.reqd/opt/janet
 JANET = $(JANET_PREFIX)/bin/janet
