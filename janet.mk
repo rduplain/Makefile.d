@@ -33,7 +33,7 @@ $(JPM_DEPS_INSTALLED): project.janet
 $(JANET): $(__FILE__)
 	test -d $(JANET_SRC) || git clone $(JANET_URL) $(JANET_SRC)
 	cd $(JANET_SRC); git checkout $(JANET_REV)
-	cd $(JANET_SRC); make && make install
+	cd $(JANET_SRC); $(MAKE) && $(MAKE) install
 	@echo "Janet executable in place: $(JANET) ..."
 	touch $@
 
