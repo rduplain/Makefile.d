@@ -15,6 +15,7 @@ RUBY_BUNDLER_VERSION := 2.0.2
 endif
 
 export PATH := $(GEM_HOME)/bin:$(PATH)
+export GEM_HOME
 
 bundle-command: $(BUNDLE)
 
