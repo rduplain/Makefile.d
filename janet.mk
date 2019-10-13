@@ -27,7 +27,7 @@ jpm-command: $(JANET)
 jpm-deps: jpm-command $(JPM_DEPS_INSTALLED)
 
 $(JPM_DEPS_INSTALLED): project.janet
-	@jpm deps
+	@$(JPM) deps
 	@touch $@
 
 $(JANET): $(__FILE__)
