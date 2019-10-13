@@ -16,6 +16,8 @@ PIP := $(PYTHON_ENV)/bin/pip
 
 PIP_INSTALLED := $(PYTHON_ENV)/bin/.pip-installed
 
+export PATH := $(PYTHON_ENV)/bin:$(PATH)
+
 # Provide a space delimited list of requirements with PYTHON_REQUIREMENTS.
 # Defaults to pip as a no-op.
 ifeq ($(PYTHON_REQUIREMENTS),)

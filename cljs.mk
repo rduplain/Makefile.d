@@ -20,6 +20,8 @@ ifeq ($(CLJS_NAME),)
 $(error Set CLJS_NAME to basename of ClojureScript project.)
 endif
 
+export PATH := $(PROJECT_ROOT)/node_modules/.bin:$(PATH)
+
 
 ### Recipes ###
 

@@ -14,6 +14,8 @@ BATS_SRC = $(PROJECT_ROOT)/.reqd/src/bats/$(BATS_REV)
 BATS_PREFIX = $(PROJECT_ROOT)/.reqd/opt/bats
 BATS = $(BATS_PREFIX)/bin/bats
 
+export PATH := $(BATS_PREFIX)/bin:$(PATH)
+
 bats-command: $(BATS)
 	@true
 

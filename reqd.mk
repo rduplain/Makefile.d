@@ -22,6 +22,8 @@ export REQD_VAR    := $(REQD_DIR)/var
 
 REQD := $(REQD_BIN)/reqd
 
+export PATH := $(REQD_PREFIX)/bin:$(REQD_BIN):$(PATH)
+
 # Accept space-delimited ordered recipe list to install when installing 'all'.
 ifeq ($(REQD_FIRST),)
 REQD_FIRST := all

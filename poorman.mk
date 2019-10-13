@@ -12,6 +12,8 @@ include $(DIR)/qwerty.mk
 # reqd is not required, but use its conventional location.
 POORMAN := $(PROJECT_ROOT)/.reqd/usr/bin/poorman
 
+export PATH := $(PROJECT_ROOT)/.reqd/usr/bin:$(PATH)
+
 poorman-command: $(POORMAN)
 	@true
 
