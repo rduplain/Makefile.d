@@ -3,8 +3,8 @@
 __FILE__ := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
-POORMAN_URL := https://github.com/rduplain/poorman.git
-POORMAN_REV := v0.6.2
+POORMAN_URL ?= https://github.com/rduplain/poorman.git
+POORMAN_REV ?= v0.6.2
 
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk

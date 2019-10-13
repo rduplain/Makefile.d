@@ -7,8 +7,8 @@ include $(DIR)/command.mk
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
 
-REQD_URL := https://github.com/rduplain/reqd.git
-REQD_REV := v2.2
+REQD_URL ?= https://github.com/rduplain/reqd.git
+REQD_REV ?= v2.2
 
 export REQD_DIR    := $(PROJECT_ROOT)/.reqd
 export REQD_PREFIX := $(REQD_DIR)/usr

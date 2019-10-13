@@ -3,8 +3,8 @@
 __FILE__ := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
-BATS_URL := https://github.com/sstephenson/bats.git
-BATS_REV := v0.4.0
+BATS_URL ?= https://github.com/sstephenson/bats.git
+BATS_REV ?= v0.4.0
 
 include $(DIR)/path.mk
 include $(DIR)/qwerty.mk
