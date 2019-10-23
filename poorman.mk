@@ -1,6 +1,6 @@
 # Provide poorman to run a Procfile.
 
-__FILE__ := $(lastword $(MAKEFILE_LIST))
+POORMAN_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 POORMAN_URL ?= https://github.com/rduplain/poorman.git
@@ -22,6 +22,6 @@ export PATH := $(PROJECT_ROOT)/.reqd/usr/bin:$(PATH)
 poorman-command: $(POORMAN)
 	@true
 
-$(POORMAN): $(__FILE__)
+$(POORMAN): $(POORMAN_MK)
 	@rm -f $@
 	$(QWERTY_SH) $(POORMAN_REV_SPEC) --chmod=a+x $(POORMAN_URL) poorman:$@

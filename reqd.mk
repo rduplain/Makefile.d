@@ -1,6 +1,6 @@
 # Provide reqd to download & install required tools.
 
-__FILE__ := $(lastword $(MAKEFILE_LIST))
+REQD_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/command.mk
@@ -37,7 +37,7 @@ endif
 
 reqd-command: $(REQD)
 
-$(REQD): $(__FILE__)
+$(REQD): $(REQD_MK)
 	$(QWERTY_SH) -f --chmod=a+x -o $(REQD_DIR) $(REQD_REV_SPEC) $(REQD_URL) \
 		bin/reqd
 

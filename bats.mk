@@ -1,6 +1,6 @@
 # Provide bats testing framework.
 
-__FILE__ := $(lastword $(MAKEFILE_LIST))
+BATS_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 BATS_URL ?= https://github.com/sstephenson/bats.git
@@ -24,7 +24,7 @@ export PATH := $(BATS_PREFIX)/bin:$(PATH)
 bats-command: $(BATS)
 	@true
 
-$(BATS): $(__FILE__)
+$(BATS): $(BATS_MK)
 	$(QWERTY_SH) -f -o $(BATS_SRC) $(BATS_REV_SPEC) $(BATS_URL)
 	cd $(BATS_SRC); ./install.sh $(BATS_PREFIX)
 	touch $@

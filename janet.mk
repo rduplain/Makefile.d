@@ -1,6 +1,6 @@
 # Provide a full project-local Janet installation.
 
-__FILE__ := $(lastword $(MAKEFILE_LIST))
+JANET_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 JANET_URL ?= https://github.com/janet-lang/janet.git
@@ -30,7 +30,7 @@ $(JPM_DEPS_INSTALLED): project.janet
 	@$(JPM) deps
 	@touch $@
 
-$(JANET): $(__FILE__)
+$(JANET): $(JANET_MK)
 	test -d $(JANET_SRC) || git clone $(JANET_URL) $(JANET_SRC)
 	cd $(JANET_SRC); git checkout $(JANET_REV)
 	cd $(JANET_SRC); $(MAKE) && $(MAKE) install
