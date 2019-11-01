@@ -7,7 +7,6 @@ JANET_URL ?= https://github.com/janet-lang/janet.git
 JANET_REV ?= v1.3.1
 
 include $(DIR)/path.mk
-include $(DIR)/qwerty.mk
 
 JANET_SRC = $(PROJECT_ROOT)/.reqd/src/janet/$(JANET_REV)
 JANET_PREFIX = $(PROJECT_ROOT)/.reqd/opt/janet
