@@ -6,26 +6,26 @@ set -e
 test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
 general() {
-    make -C "$test_dir"/external/with-qwerty
-    make -C "$test_dir"/external/with-git
-    make -C "$test_dir"/misc
+    make --no-print-directory -C "$test_dir"/external/with-qwerty
+    make --no-print-directory -C "$test_dir"/external/with-git
+    make --no-print-directory -C "$test_dir"/misc
 }
 
 cljs() {
-    make -C "$test_dir"/cljs
+    make --no-print-directory -C "$test_dir"/cljs
 }
 
 ocaml() {
-    make -C "$test_dir"/ocaml
+    make --no-print-directory -C "$test_dir"/ocaml
 }
 
 python() {
-    make -C "$test_dir"/python prove-python
+    make --no-print-directory -C "$test_dir"/python prove-python
     "$test_dir"/bin/test-make-run python
 }
 
 ruby() {
-    make -C "$test_dir"/ruby
+    make --no-print-directory -C "$test_dir"/ruby
 }
 
 main() {
