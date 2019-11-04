@@ -1,0 +1,6 @@
+_build/
+*.install
+.Makefile.d/
+.merlin
+_opam/
+*.opam

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Check that `opam switch` exists at _opam path & matches given OCaml version.
+
+# Exit immediately if a command error or non-zero return occurs.
+set -e
+
+# The name of this executable program.
+PROG="$( basename "${BASH_SOURCE[0]}" )"
+
+main() {
+    if [ $# -ne 2 ]; then
+        echo "usage: $PROG _OPAM OCAML_VERSION" >&2
+        return 2
+    fi
+
+    local _opam="$1"
+    local ocaml_version="$2"
+    shift 2
+
+    local state="$_opam"/.opam-switch/switch-state
+
+    if [ ! -d "$_opam" ]; then
+        # Directory does not exist.
+        return 10
+    fi
+
+    if ! grep -q "\"ocaml.$ocaml_version\"" "$state" >/dev/null 2>&1; then
+        return 20
+    fi
+
+    return 0
+}
+
+main "$@"

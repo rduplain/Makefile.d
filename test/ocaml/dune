@@ -1,0 +1,5 @@
+(executable
+ (name hello)
+ (modules hello)
+ (ocamlopt_flags -O3)
+ (libraries cmdliner))

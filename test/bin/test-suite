@@ -15,6 +15,10 @@ cljs() {
     make -C "$test_dir"/cljs
 }
 
+ocaml() {
+    make -C "$test_dir"/ocaml
+}
+
 python() {
     make -C "$test_dir"/python prove-python
     "$test_dir"/bin/test-make-run python
@@ -26,7 +30,7 @@ ruby() {
 
 main() {
     if [ $# -eq 0 ]; then
-        set -- general cljs python ruby
+        set -- general cljs ocaml python ruby
     fi
 
     for test in $@; do

@@ -1,0 +1,15 @@
+(lang dune 1.11)
+
+(generate_opam_files true)
+
+(authors nobody)
+(maintainers nobody)
+(homepage "https://github.com/rduplain/Makefile.d")
+(bug_reports "https://github.com/rduplain/Makefile.d/issues")
+
+(package
+ (name hello)
+ (synopsis "Say Hello")
+ (depends
+  (ocaml (>= 4.03.0))
+  (cmdliner (= 1.0.4))))
