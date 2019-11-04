@@ -3,6 +3,8 @@
 
 set -e
 
+export MAKE="${MAKE-make}"
+
 test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
 general() {
