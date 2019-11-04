@@ -13,7 +13,7 @@ JANET_PREFIX = $(PROJECT_ROOT)/.reqd/opt/janet
 JANET = $(JANET_PREFIX)/bin/janet
 JPM = $(JANET_PREFIX)/bin/jpm
 
-JPM_DEPS_INSTALLED = $(JANET_PREFIX)/lib/.jpm-deps-installed
+JPM_DEPS_INSTALL = $(JANET_PREFIX)/lib/.jpm-deps-install
 
 export PATH := $(JANET_PREFIX)/bin:$(PATH)
 
@@ -23,9 +23,9 @@ janet-command: $(JANET)
 jpm-command: $(JANET)
 	@true
 
-jpm-deps: jpm-command $(JPM_DEPS_INSTALLED)
+jpm-deps: jpm-command $(JPM_DEPS_INSTALL)
 
-$(JPM_DEPS_INSTALLED): project.janet
+$(JPM_DEPS_INSTALL): project.janet
 	@$(JPM) deps
 	@touch $@
 
