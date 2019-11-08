@@ -11,8 +11,8 @@
 
 main() {
     header
-    python linux
-    python osx
+    python linux # general
+    python osx # general
     ruby linux
     ruby osx
     cljs linux
