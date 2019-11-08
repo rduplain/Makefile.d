@@ -2,9 +2,11 @@
 
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
+WAIT_POLL_INTERVAL ?= 0.25
+
 include $(DIR)/command.mk
 
 wait-tcp-%: nc-command
-	@bash -c "while ! nc -z $(HOST) $*; do sleep 0.25; done"
+	@bash -c "while ! nc -z $(HOST) $*; do sleep $(WAIT_POLL_INTERVAL); done"
 
 wait-tcp-%: HOST := localhost
