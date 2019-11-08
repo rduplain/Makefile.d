@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# -*- mode: yaml -*-
+# vi: set ft=yaml :
+
 # Generate a Language x OS matrix for Travis CI.
 #
 # As of the end of 2018, Travis CI does not have any documentation on a matrix
