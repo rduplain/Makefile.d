@@ -58,7 +58,7 @@ all                                                            $os && cat <<___
 ___
 linux                                                          $os && cat <<___
         - export PATH=/opt/clj/bin:"\$PATH"
-        - if ! which clojure; then curl https://download.clojure.org/install/linux-install-1.9.0.358.sh | sudo bash -s - -p /opt/clj; fi
+        - if ! which clojure; then curl -sSL https://download.clojure.org/install/linux-install-1.10.1.483.sh | sudo bash -s - -p /opt/clj; fi
 ___
 all                                                            $os && cat <<___
         - which make java clojure node npm
