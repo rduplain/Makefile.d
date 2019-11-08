@@ -165,6 +165,7 @@ osx                                                            $os && cat <<___
 ___
 all                                                            $os && cat <<___
           - ./test/python/.reqd/src
+          - ./test/misc/.reqd/
 ___
 osx                                                            $os && cat <<___
           - ~/Library/Caches/Homebrew

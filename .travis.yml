@@ -98,6 +98,7 @@ matrix:
         directories:
           - ~/.cache/pip
           - ./test/python/.reqd/src
+          - ./test/misc/.reqd/
     - os: osx
       language: generic
       addons:
@@ -116,6 +117,7 @@ matrix:
         directories:
           - ~/Library/Caches/pip
           - ./test/python/.reqd/src
+          - ./test/misc/.reqd/
           - ~/Library/Caches/Homebrew
           - /usr/local/Homebrew
       before_cache:
