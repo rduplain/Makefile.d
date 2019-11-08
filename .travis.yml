@@ -21,8 +21,8 @@ matrix:
           - ~/.m2
           - ~/.npm
           - ~/.pkg-cache
-          - .cpcache
-          - node_modules
+          - ./test/cljs/.cpcache
+          - ./test/cljs/node_modules
           - /opt/clj
     - os: osx
       language: node_js
@@ -40,8 +40,8 @@ matrix:
           - ~/.m2
           - ~/.npm
           - ~/.pkg-cache
-          - .cpcache
-          - node_modules
+          - ./test/cljs/.cpcache
+          - ./test/cljs/node_modules
           - ~/Library/Caches/Homebrew
           - /usr/local/Homebrew
       before_cache:

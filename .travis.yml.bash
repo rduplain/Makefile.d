@@ -69,8 +69,8 @@ all                                                            $os && cat <<___
           - ~/.m2
           - ~/.npm
           - ~/.pkg-cache
-          - .cpcache
-          - node_modules
+          - ./test/cljs/.cpcache
+          - ./test/cljs/node_modules
 ___
 linux                                                          $os && cat <<___
           - /opt/clj
