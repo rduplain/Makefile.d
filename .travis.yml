@@ -43,6 +43,38 @@ matrix:
           - .cpcache
           - node_modules
     - os: linux
+      language: generic
+      before_install:
+        - sudo add-apt-repository -y ppa:avsm/ppa
+        - sudo apt-get -q update
+        - sudo apt-get -y install opam
+      install:
+        - which make opam
+        - opam init --yes --bare --no-setup
+      script:
+        - ./test/bin/test-suite ocaml
+      cache:
+        directories:
+          - ~/.opam
+          - ./test/ocaml/_opam
+    - os: osx
+      language: generic
+      addons:
+        homebrew:
+          packages:
+            - gpatch
+            - opam
+          update: true
+      install:
+        - which make opam
+        - opam init --yes --bare --no-setup
+      script:
+        - ./test/bin/test-suite ocaml
+      cache:
+        directories:
+          - ~/.opam
+          - ./test/ocaml/_opam
+    - os: linux
       language: python
       python: 3.4
       install:
