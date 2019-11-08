@@ -5,6 +5,44 @@
 matrix:
   include:
     - os: linux
+      language: node_js
+      node_js: lts/*
+      addons:
+        apt:
+          packages: rlwrap
+      install:
+        - export PATH=/opt/clj/bin:"$PATH"
+        - if ! which clojure; then curl https://download.clojure.org/install/linux-install-1.9.0.358.sh | sudo bash -s - -p /opt/clj; fi
+        - which make java clojure node npm
+      script:
+        - ./test/bin/test-suite cljs
+      cache:
+        directories:
+          - ~/.m2
+          - ~/.npm
+          - ~/.pkg-cache
+          - .cpcache
+          - node_modules
+          - /opt/clj
+    - os: osx
+      language: node_js
+      node_js: lts/*
+      addons:
+        homebrew:
+          packages: clojure
+          update: true
+      install:
+        - which make java clojure node npm
+      script:
+        - ./test/bin/test-suite cljs
+      cache:
+        directories:
+          - ~/.m2
+          - ~/.npm
+          - ~/.pkg-cache
+          - .cpcache
+          - node_modules
+    - os: linux
       language: python
       python: 3.4
       install:
@@ -58,44 +96,6 @@ matrix:
         - which make ruby
       script:
         - ./test/bin/test-suite ruby
-    - os: linux
-      language: node_js
-      node_js: lts/*
-      addons:
-        apt:
-          packages: rlwrap
-      install:
-        - export PATH=/opt/clj/bin:"$PATH"
-        - if ! which clojure; then curl https://download.clojure.org/install/linux-install-1.9.0.358.sh | sudo bash -s - -p /opt/clj; fi
-        - which make java clojure node npm
-      script:
-        - ./test/bin/test-suite cljs
-      cache:
-        directories:
-          - ~/.m2
-          - ~/.npm
-          - ~/.pkg-cache
-          - .cpcache
-          - node_modules
-          - /opt/clj
-    - os: osx
-      language: node_js
-      node_js: lts/*
-      addons:
-        homebrew:
-          packages: clojure
-          update: true
-      install:
-        - which make java clojure node npm
-      script:
-        - ./test/bin/test-suite cljs
-      cache:
-        directories:
-          - ~/.m2
-          - ~/.npm
-          - ~/.pkg-cache
-          - .cpcache
-          - node_modules
 notifications:
   email:
     on_success: never

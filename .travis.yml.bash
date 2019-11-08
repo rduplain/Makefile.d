@@ -11,12 +11,12 @@
 
 main() {
     header
+    cljs linux
+    cljs osx
     python linux # general
     python osx # general
     ruby linux
     ruby osx
-    cljs linux
-    cljs osx
     footer
 }
 
@@ -28,6 +28,48 @@ cat                                                                       <<___
 
 matrix:
   include:
+___
+}
+
+cljs() {
+os=$1
+
+all                                                            $os && cat <<___
+    - os: $os
+      language: node_js
+      node_js: lts/*
+      addons:
+___
+linux                                                          $os && cat <<___
+        apt:
+          packages: rlwrap
+___
+osx                                                            $os && cat <<___
+        homebrew:
+          packages: clojure
+          update: true
+___
+all                                                            $os && cat <<___
+      install:
+___
+linux                                                          $os && cat <<___
+        - export PATH=/opt/clj/bin:"\$PATH"
+        - if ! which clojure; then curl https://download.clojure.org/install/linux-install-1.9.0.358.sh | sudo bash -s - -p /opt/clj; fi
+___
+all                                                            $os && cat <<___
+        - which make java clojure node npm
+      script:
+        - ./test/bin/test-suite cljs
+      cache:
+        directories:
+          - ~/.m2
+          - ~/.npm
+          - ~/.pkg-cache
+          - .cpcache
+          - node_modules
+___
+linux                                                          $os && cat <<___
+          - /opt/clj
 ___
 }
 
@@ -90,48 +132,6 @@ all                                                            $os && cat <<___
         - which make ruby
       script:
         - ./test/bin/test-suite ruby
-___
-}
-
-cljs() {
-os=$1
-
-all                                                            $os && cat <<___
-    - os: $os
-      language: node_js
-      node_js: lts/*
-      addons:
-___
-linux                                                          $os && cat <<___
-        apt:
-          packages: rlwrap
-___
-osx                                                            $os && cat <<___
-        homebrew:
-          packages: clojure
-          update: true
-___
-all                                                            $os && cat <<___
-      install:
-___
-linux                                                          $os && cat <<___
-        - export PATH=/opt/clj/bin:"\$PATH"
-        - if ! which clojure; then curl https://download.clojure.org/install/linux-install-1.9.0.358.sh | sudo bash -s - -p /opt/clj; fi
-___
-all                                                            $os && cat <<___
-        - which make java clojure node npm
-      script:
-        - ./test/bin/test-suite cljs
-      cache:
-        directories:
-          - ~/.m2
-          - ~/.npm
-          - ~/.pkg-cache
-          - .cpcache
-          - node_modules
-___
-linux                                                          $os && cat <<___
-          - /opt/clj
 ___
 }
 
