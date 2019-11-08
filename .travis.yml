@@ -42,6 +42,10 @@ matrix:
           - ~/.pkg-cache
           - .cpcache
           - node_modules
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
     - os: linux
       language: generic
       before_install:
@@ -74,6 +78,10 @@ matrix:
         directories:
           - ~/.opam
           - ./test/ocaml/_opam
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
     - os: linux
       language: python
       python: 3.4
@@ -108,6 +116,10 @@ matrix:
         directories:
           - ~/Library/Caches/pip
           - ./test/python/.reqd/src
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
     - os: linux
       language: ruby
       rvm: 2.6.3

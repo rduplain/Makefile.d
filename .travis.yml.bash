@@ -75,6 +75,12 @@ ___
 linux                                                          $os && cat <<___
           - /opt/clj
 ___
+osx                                                            $os && cat <<___
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
+___
 }
 
 ocaml() {
@@ -108,6 +114,12 @@ all                                                            $os && cat <<___
         directories:
           - ~/.opam
           - ./test/ocaml/_opam
+___
+osx                                                            $os && cat <<___
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
 ___
 }
 
@@ -153,6 +165,12 @@ osx                                                            $os && cat <<___
 ___
 all                                                            $os && cat <<___
           - ./test/python/.reqd/src
+___
+osx                                                            $os && cat <<___
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
 ___
 }
 
