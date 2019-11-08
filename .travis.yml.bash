@@ -20,6 +20,8 @@ main() {
     footer
 }
 
+## .travis.yml content ##
+
 header() {
 cat                                                                       <<___
 # GENERATED FILE - DO NOT EDIT
@@ -142,6 +144,8 @@ notifications:
     on_success: never
 ___
 }
+
+## predicate functions ##
 
 all() {
     return 0
