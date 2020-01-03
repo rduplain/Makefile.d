@@ -134,4 +134,4 @@ When setting `QWERTY_SH` to a local filepath:
 
 [build]: https://travis-ci.org/rduplain/Makefile.d.svg?branch=master
 
-Copyright (c) 2015-2019, Ron DuPlain. BSD licensed.
+Copyright (c) 2015-2020, Ron DuPlain. BSD licensed.
