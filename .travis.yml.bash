@@ -140,8 +140,10 @@ osx                                                            $os && cat <<___
       language: generic
       addons:
         homebrew:
-          packages: python3
+          packages: python
           update: true
+      before_install:
+        - brew link --overwrite python
 ___
 all                                                            $os && cat <<___
       install:
