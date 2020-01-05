@@ -1,4 +1,4 @@
-all: prove-bats prove-janet
+all: prove-bats prove-janet prove-lua
 
 include .Makefile.d/bats.mk
 
@@ -17,3 +17,15 @@ prove-janet: janet-command jpm-command
 	@echo
 	@echo "Show Janet version:"
 	@$(JANET) -e "(print (string \"Janet \" janet/version))"
+
+include .Makefile.d/lua.mk
+
+prove-lua: lua-command luarocks-command
+	@echo "Verifying Lua install ..."
+	@echo "Show LuaRocks help:"
+	@$(LUAROCKS) --help
+	@echo
+	@echo "That is LuaRocks's help above. Thank you, LuaRocks."
+	@echo
+	@echo "Show Lua version:"
+	@$(LUA) -e "print(_VERSION)"
