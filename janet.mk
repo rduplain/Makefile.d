@@ -34,7 +34,7 @@ $(JANET): $(JANET_MK)
 	cd $(JANET_SRC); git checkout $(JANET_REV)
 	cd $(JANET_SRC); $(MAKE) && $(MAKE) install
 	@echo "Janet executable in place: $(JANET) ..."
-	touch $@
+	@touch $@
 
 $(JANET): export PREFIX = $(JANET_PREFIX)
 $(JANET): export MANPATH = $(PREFIX)/share/man/man1/
