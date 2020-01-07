@@ -29,6 +29,7 @@ $(JPM_DEPS_INSTALL): project.janet
 	@$(JPM) deps
 	@touch $@
 
+# Note that Janet inspects git during its build; retain Janet .git directory.
 $(JANET): $(JANET_MK)
 	test -d $(JANET_SRC) || git clone $(JANET_URL) $(JANET_SRC)
 	cd $(JANET_SRC); git checkout $(JANET_REV)
