@@ -4,19 +4,19 @@ include .Makefile.d/bats.mk
 
 prove-bats: bats-command
 	@echo "Verifying bats install ..."
-	@$(BATS) -h
+	@"$(BATS)" -h
 
 include .Makefile.d/janet.mk
 
 prove-janet: janet-command jpm-command
 	@echo "Verifying Janet install ..."
 	@echo "Show jpm help:"
-	@$(JPM) --help
+	@"$(JPM)" --help
 	@echo
 	@echo "That is jpm's help above. Thank you, jpm."
 	@echo
 	@echo "Show Janet version:"
-	@$(JANET) -e "(print (string \"Janet \" janet/version))"
+	@"$(JANET)" -e "(print (string \"Janet \" janet/version))"
 
 include .Makefile.d/lua.mk
 
