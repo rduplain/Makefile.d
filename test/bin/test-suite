@@ -8,27 +8,27 @@ export MAKE="${MAKE-make}"
 test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
 general() {
-    make --no-print-directory -C "$test_dir"/external/with-git
-    make --no-print-directory -C "$test_dir"/external/with-qwerty
-    make --no-print-directory -C "$test_dir"/misc
-    make --no-print-directory -C "$test_dir"/misc-alt
+    "$MAKE" --no-print-directory -C "$test_dir"/external/with-git
+    "$MAKE" --no-print-directory -C "$test_dir"/external/with-qwerty
+    "$MAKE" --no-print-directory -C "$test_dir"/misc
+    "$MAKE" --no-print-directory -C "$test_dir"/misc-alt
 }
 
 cljs() {
-    make --no-print-directory -C "$test_dir"/cljs
+    "$MAKE" --no-print-directory -C "$test_dir"/cljs
 }
 
 ocaml() {
-    make --no-print-directory -C "$test_dir"/ocaml
+    "$MAKE" --no-print-directory -C "$test_dir"/ocaml
 }
 
 python() {
-    make --no-print-directory -C "$test_dir"/python prove-python
+    "$MAKE" --no-print-directory -C "$test_dir"/python prove-python
     "$test_dir"/bin/test-make-run python
 }
 
 ruby() {
-    make --no-print-directory -C "$test_dir"/ruby
+    "$MAKE" --no-print-directory -C "$test_dir"/ruby
 }
 
 main() {
