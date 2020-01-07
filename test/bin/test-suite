@@ -8,8 +8,8 @@ export MAKE="${MAKE-make}"
 test_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
 general() {
-    make --no-print-directory -C "$test_dir"/external/with-qwerty
     make --no-print-directory -C "$test_dir"/external/with-git
+    make --no-print-directory -C "$test_dir"/external/with-qwerty
     make --no-print-directory -C "$test_dir"/misc
     make --no-print-directory -C "$test_dir"/misc-alt
 }
