@@ -27,6 +27,8 @@ luarocks-command: $(LUAROCKS)
 	@true
 
 $(LUAROCKS): $(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz $(LUA)
+	test -d $(LUA_SRC) || mkdir -p $(LUA_SRC)
+
 	cd $(LUA_SRC); tar -xf luarocks-$(LUAROCKS_REV).tar.gz
 
 	cd $(LUA_SRC)/luarocks-$(LUAROCKS_REV); \

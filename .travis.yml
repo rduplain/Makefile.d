@@ -132,6 +132,14 @@ matrix:
           - /usr/local/Homebrew
       before_cache:
         - brew cleanup
+    - name: raptorjit
+      os: linux
+      language: generic
+      script:
+        - ./test/bin/test-suite raptorjit
+      cache:
+        directories:
+          - ./test/raptorjit/.reqd/src
     - name: ruby
       os: linux
       language: ruby

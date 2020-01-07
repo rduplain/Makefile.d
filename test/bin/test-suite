@@ -27,13 +27,17 @@ python() {
     "$test_dir"/bin/test-make-run python
 }
 
+raptorjit() {
+    "$MAKE" --no-print-directory -C "$test_dir"/raptorjit
+}
+
 ruby() {
     "$MAKE" --no-print-directory -C "$test_dir"/ruby
 }
 
 main() {
     if [ $# -eq 0 ]; then
-        set -- general cljs ocaml python ruby
+        set -- general cljs ocaml python raptorjit ruby
     fi
 
     for test in $@; do

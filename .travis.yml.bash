@@ -20,6 +20,7 @@ main() {
     general osx
     ocaml linux
     ocaml osx
+    raptorjit linux
     ruby linux
     ruby osx
     footer
@@ -181,6 +182,21 @@ osx                                                            $os && cat <<___
           - /usr/local/Homebrew
       before_cache:
         - brew cleanup
+___
+}
+
+raptorjit() {
+os=$1
+
+all                                                            $os && cat <<___
+    - name: raptorjit
+      os: $os
+      language: generic
+      script:
+        - ./test/bin/test-suite raptorjit
+      cache:
+        directories:
+          - ./test/raptorjit/.reqd/src
 ___
 }
 
