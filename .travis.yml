@@ -4,7 +4,8 @@
 
 matrix:
   include:
-    - os: linux
+    - name: cljs
+      os: linux
       language: node_js
       node_js: lts/*
       addons:
@@ -24,7 +25,8 @@ matrix:
           - ./test/cljs/.cpcache
           - ./test/cljs/node_modules
           - /opt/clj
-    - os: osx
+    - name: cljs
+      os: osx
       language: node_js
       node_js: lts/*
       addons:
@@ -46,7 +48,8 @@ matrix:
           - /usr/local/Homebrew
       before_cache:
         - brew cleanup
-    - os: linux
+    - name: general
+      os: linux
       language: python
       python: 3.4
       install:
@@ -63,7 +66,8 @@ matrix:
           - ~/.cache/pip
           - ./test/python/.reqd/src
           - ./test/misc/.reqd/
-    - os: osx
+    - name: general
+      os: osx
       language: generic
       addons:
         homebrew:
@@ -88,7 +92,8 @@ matrix:
           - /usr/local/Homebrew
       before_cache:
         - brew cleanup
-    - os: linux
+    - name: ocaml
+      os: linux
       language: generic
       before_install:
         - sudo add-apt-repository -y ppa:avsm/ppa
@@ -103,7 +108,8 @@ matrix:
         directories:
           - ~/.opam
           - ./test/ocaml/_opam
-    - os: osx
+    - name: ocaml
+      os: osx
       language: generic
       addons:
         homebrew:
@@ -124,7 +130,8 @@ matrix:
           - /usr/local/Homebrew
       before_cache:
         - brew cleanup
-    - os: linux
+    - name: ruby
+      os: linux
       language: ruby
       rvm: 2.6.3
       install:
@@ -134,7 +141,8 @@ matrix:
         - which make ruby
       script:
         - ./test/bin/test-suite ruby
-    - os: osx
+    - name: ruby
+      os: osx
       language: ruby
       rvm: 2.6.3
       install:

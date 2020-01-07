@@ -42,7 +42,8 @@ cljs() {
 os=$1
 
 all                                                            $os && cat <<___
-    - os: $os
+    - name: cljs
+      os: $os
       language: node_js
       node_js: lts/*
       addons:
@@ -90,7 +91,8 @@ general() {
 os=$1
 
 all                                                            $os && cat <<___
-    - os: $os
+    - name: general
+      os: $os
 ___
 linux                                                          $os && cat <<___
       language: python
@@ -144,7 +146,8 @@ ocaml() {
 os=$1
 
 all                                                            $os && cat <<___
-    - os: $os
+    - name: ocaml
+      os: $os
       language: generic
 ___
 linux                                                          $os && cat <<___
@@ -184,7 +187,8 @@ ruby() {
 os=$1
 
 all                                                            $os && cat <<___
-    - os: $os
+    - name: ruby
+      os: $os
       language: ruby
       rvm: 2.6.3
       install:
