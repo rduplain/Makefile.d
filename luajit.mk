@@ -1,6 +1,7 @@
 # Provide a project-local LuaJIT installation.
 #
-# To avoid collisions, use either lua.mk or luajit.mk, not both.
+# To avoid collisions, do not use with lua.mk or other Lua implementations in
+# Makefile.d.
 
 LUAJIT_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
@@ -19,6 +20,7 @@ LUAJIT_SRC = $(PROJECT_ROOT)/.reqd/src/luajit/$(LUAJIT_REV)
 LUAJIT_PREFIX = $(PROJECT_ROOT)/.reqd/opt/luajit
 LUAJIT = $(LUAJIT_PREFIX)/bin/luajit
 
+# Support luarocks.mk with luajit.mk.
 LUA_SRC = $(LUAJIT_SRC)
 LUA_PREFIX = $(LUAJIT_PREFIX)
 LUA = $(LUAJIT_PREFIX)/bin/lua
