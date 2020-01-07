@@ -65,7 +65,8 @@ matrix:
         directories:
           - ~/.cache/pip
           - ./test/python/.reqd/src
-          - ./test/misc/.reqd/
+          - ./test/misc/.reqd
+          - ./test/misc-alt/.reqd
     - name: general
       os: osx
       language: generic
@@ -87,7 +88,8 @@ matrix:
         directories:
           - ~/Library/Caches/pip
           - ./test/python/.reqd/src
-          - ./test/misc/.reqd/
+          - ./test/misc/.reqd
+          - ./test/misc-alt/.reqd
           - ~/Library/Caches/Homebrew
           - /usr/local/Homebrew
       before_cache:
