@@ -7,7 +7,7 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
-PYTHON_ENV_NAME := python
+PYTHON_ENV_NAME ?= python
 PYTHON_ENV := $(PROJECT_ROOT)/.reqd/opt/$(PYTHON_ENV_NAME)
 PYTHON := $(PYTHON_ENV)/bin/python
 PIP3 := $(PYTHON_ENV)/bin/pip3
