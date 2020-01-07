@@ -20,7 +20,9 @@ LUAJIT_SRC = $(PROJECT_ROOT)/.reqd/src/luajit/$(LUAJIT_REV)
 LUAJIT_PREFIX = $(PROJECT_ROOT)/.reqd/opt/luajit
 LUAJIT = $(LUAJIT_PREFIX)/bin/luajit
 
-# Support luarocks.mk with luajit.mk.
+# Support luarocks.mk.
+LUA_INCLUDE = $(LUAJIT_PREFIX)/include/luajit-*
+LUA_LIB = $(LUAJIT_PREFIX)/lib
 LUA_SRC = $(LUAJIT_SRC)
 LUA_PREFIX = $(LUAJIT_PREFIX)
 LUA = $(LUAJIT_PREFIX)/bin/lua

@@ -20,6 +20,10 @@ LUA_SRC = $(PROJECT_ROOT)/.reqd/src/lua/$(LUA_REV)
 LUA_PREFIX = $(PROJECT_ROOT)/.reqd/opt/lua
 LUA = $(LUA_PREFIX)/bin/lua
 
+# Support luarocks.mk.
+LUA_INCLUDE = $(LUA_PREFIX)/include
+LUA_LIB = $(LUA_PREFIX)/lib
+
 include $(DIR)/luarocks.mk
 
 export PATH := $(LUA_PREFIX)/bin:$(PATH)

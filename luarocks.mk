@@ -30,7 +30,9 @@ $(LUAROCKS): $(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz $(LUA)
 	cd $(LUA_SRC); tar -xf luarocks-$(LUAROCKS_REV).tar.gz
 
 	cd $(LUA_SRC)/luarocks-$(LUAROCKS_REV); \
-		./configure --prefix=$(LUA_PREFIX) --with-lua=$(LUA_PREFIX) && \
+		./configure --prefix=$(LUA_PREFIX) --with-lua=$(LUA_PREFIX) \
+			--with-lua-include=$(shell cd $(LUA_INCLUDE) && pwd) \
+			--with-lua-lib=$(shell cd $(LUA_LIB) && pwd) && \
 		$(MAKE) $(LUAROCKS_BUILD_FLAGS) && \
 		$(MAKE) install
 
