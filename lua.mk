@@ -41,12 +41,8 @@ lua-command: $(LUA)
 luarocks-command: $(LUAROCKS)
 	@true
 
-$(LUA): $(LUA_MK)
+$(LUA): $(LUA_SRC)/lua-$(LUA_REV).tar.gz $(LUA_MK)
 	test -d $(LUA_SRC) || mkdir -p $(LUA_SRC)
-
-	$(QWERTY_SH) --sha256=$(LUA_SHA256) \
-		--output=$(LUA_SRC)/lua-$(LUA_REV).tar.gz \
-		$(LUA_URL)
 
 	cd $(LUA_SRC); tar -xf lua-$(LUA_REV).tar.gz
 
@@ -58,11 +54,10 @@ $(LUA): $(LUA_MK)
 	@echo "Lua executable in place: $(LUA) ..."
 	@touch $@
 
-$(LUAROCKS): $(LUA)
-	$(QWERTY_SH) --sha256=$(LUAROCKS_SHA256) \
-		--output=$(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz \
-		$(LUAROCKS_URL)
+$(LUA_SRC)/lua-$(LUA_REV).tar.gz:
+	$(QWERTY_SH) --sha256=$(LUA_SHA256) --output=$@ $(LUA_URL)
 
+$(LUAROCKS): $(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz $(LUA)
 	cd $(LUA_SRC); tar -xf luarocks-$(LUAROCKS_REV).tar.gz
 
 	cd $(LUA_SRC)/luarocks-$(LUAROCKS_REV); \
@@ -72,3 +67,6 @@ $(LUAROCKS): $(LUA)
 
 	@echo "LuaRocks executable in place: $(LUAROCKS) ..."
 	@touch $@
+
+$(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz:
+	$(QWERTY_SH) --sha256=$(LUAROCKS_SHA256) --output=$@ $(LUAROCKS_URL)
