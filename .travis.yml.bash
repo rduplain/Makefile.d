@@ -132,8 +132,8 @@ osx                                                            $os && cat <<___
 ___
 all                                                            $os && cat <<___
           - ./test/python/.reqd/src
-          - ./test/misc/.reqd
-          - ./test/misc-alt/.reqd
+          - ./test/misc/.reqd/src
+          - ./test/misc-alt/.reqd/src
 ___
 osx                                                            $os && cat <<___
           - ~/Library/Caches/Homebrew
