@@ -2,7 +2,8 @@
 #
 # Without an OS-specific patch, Lua does not support dynamic libraries (.so)
 # when using `make posix`. This limits use of many luarocks-installable
-# packages, including `luacheck`.
+# packages, including `luacheck`. For Lua dynamic library support in
+# Makefile.d, see luajit.mk.
 
 LUA_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))

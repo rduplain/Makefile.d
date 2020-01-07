@@ -1,7 +1,8 @@
 # Provide LuaRocks within project-local Lua installation.
 #
 # This .mk is not intended for direct inclusion in user projects. It depends on
-# variables set by lua.mk and is included automatically by lua.mk.
+# variables set by lua.mk and is included automatically by lua.mk and
+# luajit.mk.
 #
 # Makefile.d builds project-local binaries for `lua` and `luarocks` at a
 # relative directory. Accordingly, `luarocks` will install its system/global

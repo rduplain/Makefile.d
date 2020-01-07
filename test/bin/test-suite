@@ -11,6 +11,7 @@ general() {
     make --no-print-directory -C "$test_dir"/external/with-qwerty
     make --no-print-directory -C "$test_dir"/external/with-git
     make --no-print-directory -C "$test_dir"/misc
+    make --no-print-directory -C "$test_dir"/misc-alt
 }
 
 cljs() {
