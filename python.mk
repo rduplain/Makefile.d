@@ -7,6 +7,8 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
+BASE_PYTHON := python3
+
 PYTHON_ENV_NAME ?= python
 PYTHON_ENV := $(PROJECT_ROOT)/.reqd/opt/$(PYTHON_ENV_NAME)
 PYTHON := $(PYTHON_ENV)/bin/python
@@ -24,12 +26,12 @@ PYTHON_REQUIREMENTS := pip
 endif
 
 $(PYTHON): | original-python3-command
-	@python3 --version
+	@$(BASE_PYTHON) --version
 	@mkdir -p $(dir $(PYTHON_ENV))
 	@echo 'Verifying not in a virtualenv (which would lead to errors) ...'
-	@python3 -c 'import sys; sys.exit(int(sys.base_prefix!=sys.prefix))'
+	@$(BASE_PYTHON) -c 'import sys; sys.exit(int(sys.base_prefix!=sys.prefix))'
 	@echo 'Continuing ...'
-	@cd $(dir $(PYTHON_ENV)); python3 -m venv --clear $(PYTHON_ENV_NAME)
+	@cd $(dir $(PYTHON_ENV)); $(BASE_PYTHON) -m venv --clear $(PYTHON_ENV_NAME)
 	@$(PYTHON) -m ensurepip --default-pip
 	@$(PIP3) install --upgrade pip
 	@$(PIP) install $(PYTHON_REQUIREMENTS)
