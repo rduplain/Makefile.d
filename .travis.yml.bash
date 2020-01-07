@@ -16,10 +16,10 @@ main() {
     header
     cljs linux
     cljs osx
+    general linux
+    general osx
     ocaml linux
     ocaml osx
-    python linux # general
-    python osx # general
     ruby linux
     ruby osx
     footer
@@ -86,47 +86,7 @@ osx                                                            $os && cat <<___
 ___
 }
 
-ocaml() {
-os=$1
-
-all                                                            $os && cat <<___
-    - os: $os
-      language: generic
-___
-linux                                                          $os && cat <<___
-      before_install:
-        - sudo add-apt-repository -y ppa:avsm/ppa
-        - sudo apt-get -q update
-        - sudo apt-get -y install opam
-___
-osx                                                            $os && cat <<___
-      addons:
-        homebrew:
-          packages:
-            - gpatch
-            - opam
-          update: true
-___
-all                                                            $os && cat <<___
-      install:
-        - which make opam
-        - opam init --yes --bare --no-setup
-      script:
-        - ./test/bin/test-suite ocaml
-      cache:
-        directories:
-          - ~/.opam
-          - ./test/ocaml/_opam
-___
-osx                                                            $os && cat <<___
-          - ~/Library/Caches/Homebrew
-          - /usr/local/Homebrew
-      before_cache:
-        - brew cleanup
-___
-}
-
-python() {
+general() {
 os=$1
 
 all                                                            $os && cat <<___
@@ -171,6 +131,46 @@ ___
 all                                                            $os && cat <<___
           - ./test/python/.reqd/src
           - ./test/misc/.reqd/
+___
+osx                                                            $os && cat <<___
+          - ~/Library/Caches/Homebrew
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
+___
+}
+
+ocaml() {
+os=$1
+
+all                                                            $os && cat <<___
+    - os: $os
+      language: generic
+___
+linux                                                          $os && cat <<___
+      before_install:
+        - sudo add-apt-repository -y ppa:avsm/ppa
+        - sudo apt-get -q update
+        - sudo apt-get -y install opam
+___
+osx                                                            $os && cat <<___
+      addons:
+        homebrew:
+          packages:
+            - gpatch
+            - opam
+          update: true
+___
+all                                                            $os && cat <<___
+      install:
+        - which make opam
+        - opam init --yes --bare --no-setup
+      script:
+        - ./test/bin/test-suite ocaml
+      cache:
+        directories:
+          - ~/.opam
+          - ./test/ocaml/_opam
 ___
 osx                                                            $os && cat <<___
           - ~/Library/Caches/Homebrew
