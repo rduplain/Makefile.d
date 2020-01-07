@@ -1,4 +1,4 @@
-# Provide a full project-local Janet installation.
+# Provide a project-local Janet installation.
 
 JANET_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
