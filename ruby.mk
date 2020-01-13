@@ -1,4 +1,8 @@
 # Provide a relative installation path for Ruby gems.
+#
+# Supports Ruby 2.4+.
+
+RUBY_MIN_VERSION ?= 2.4
 
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
@@ -21,6 +25,7 @@ bundle-%: bundle-command
 	@$(BUNDLE) $*
 
 $(BUNDLE): | gem-command
+	@$(DIR)/bin/check-ruby-version $(RUBY) $(RUBY_MIN_VERSION)
 	@gem install \
 		--install-dir $(GEM_HOME) \
 		--no-document \

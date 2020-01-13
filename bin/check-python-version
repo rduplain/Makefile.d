@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Check Python version given a command basename and a minimum version number.
+#
+# Supports major version, minor version, and patch version.
+# Checking 3.7 is supported, as is 3.7.1.
+
+set -e
+
+check_python() {
+    # Check `$python_basename` on PATH for minimum version.
+
+    if [ $# -ne 2 ]; then
+        echo "usage: check_python <python_basename> <python_version>" >&2
+        return 2
+    fi
+
+    local python_basename python_version v
+
+    python_basename="$1"
+    python_version="$2"
+    shift 2
+
+    python="$(which "$python_basename")"
+
+    if [ -z "$python" ]; then
+        echo 'error. cannot find `$python_basename`.' >&2
+        return 1
+    fi
+
+    {
+        echo    "Using:   $python"
+        echo -n "Version: "; "$python" --version
+    } >&2
+
+    v="${python_version//./, }"
+
+    if ! "$python" -c "import sys;sys.exit(int(sys.version_info<($v)))"; then
+        echo    "Requires Python ${python_version}+." >&2
+        return 2
+    fi
+}
+
+main() {
+    PROG="$( basename "${BASH_SOURCE[0]}" )"
+
+    if [ $# -ne 2 ]; then
+        echo "usage: $PROG <python_basename> <python_version>" >&2
+        return 2
+    fi
+
+    check_python "$@"
+}
+
+main "$@"

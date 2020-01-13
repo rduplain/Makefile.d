@@ -2,6 +2,8 @@
 #
 # Supports Python 3.4+.
 
+PYTHON_MIN_VERSION ?= 3.4
+
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 include $(DIR)/command.mk
@@ -26,7 +28,7 @@ PYTHON_REQUIREMENTS := pip
 endif
 
 $(PYTHON): | original-python3-command
-	@$(BASE_PYTHON) --version
+	@$(DIR)/bin/check-python-version $(BASE_PYTHON) $(PYTHON_MIN_VERSION)
 	@mkdir -p $(dir $(PYTHON_ENV))
 	@echo 'Verifying not in a virtualenv (which would lead to errors) ...'
 	@$(BASE_PYTHON) -c 'import sys; sys.exit(int(sys.base_prefix!=sys.prefix))'

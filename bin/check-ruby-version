@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Check Ruby version given a command basename and a minimum version number.
+#
+# Supports major version and minor version, but not patch version.
+# Checking 2.7 is supported, but not 2.7.0.
+
+set -e
+
+check_ruby() {
+    # Check `$ruby_basename` on PATH for minimum version.
+
+    if [ $# -ne 2 ]; then
+        echo "usage: check_ruby <ruby_basename> <ruby_version>" >&2
+        return 2
+    fi
+
+    local ruby_basename ruby_version
+
+    ruby_basename="$1"
+    ruby_version="$2"
+    shift 2
+
+    ruby="$(which "$ruby_basename")"
+
+    if [ -z "$ruby" ]; then
+        echo 'error. cannot find `$ruby_basename`.' >&2
+        return 1
+    fi
+
+    {
+        echo    "Using:   $ruby"
+        echo -n "Version: "; "$ruby" --version
+    } >&2
+
+    "$ruby" >&2 <<EOF
+    require 'rbconfig'
+
+    v = RbConfig::CONFIG["MAJOR"].to_i + RbConfig::CONFIG["MINOR"].to_f / 10
+    if v >= $ruby_version
+      exit 0
+    end
+
+    puts "Requires Ruby ${ruby_version}+."
+    exit 2
+EOF
+}
+
+main() {
+    PROG="$( basename "${BASH_SOURCE[0]}" )"
+
+    if [ $# -ne 2 ]; then
+        echo "usage: $PROG <ruby_basename> <ruby_version>" >&2
+        return 2
+    fi
+
+    check_ruby "$@"
+}
+
+main "$@"
