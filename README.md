@@ -105,9 +105,9 @@ To change this behavior, set the `QWERTY_SH` environment variable to an
 alternate download or local filepath, using one of the following patterns:
 
 ```
-QWERTY_SH="curl -sSL qwerty.sh/v0.5 | sh -s -"
-QWERTY_SH="curl -sSL https://raw.githubusercontent.com/rduplain/qwerty.sh/master/qwerty.sh | sh -s -"
-QWERTY_SH="curl -sSL https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.5.2/qwerty.sh | sh -s -"
+QWERTY_SH_URL="https://qwerty.sh/v0.5"
+QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/master/qwerty.sh"
+QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.5.2/qwerty.sh"
 QWERTY_SH="sh /path/to/qwerty.sh"
 QWERTY_SH="/path/to/qwerty.sh"
 ```
