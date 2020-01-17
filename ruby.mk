@@ -14,7 +14,7 @@ GEM_HOME := $(PROJECT_ROOT)/.reqd/opt/ruby
 GEM_PATH := $(GEM_HOME)
 BUNDLE := $(GEM_HOME)/bin/bundle
 
-RUBY_BUNDLER_VERSION ?= 2.0.2
+RUBY_BUNDLER_VERSION ?= 2.1.4
 
 export PATH := $(GEM_HOME)/bin:$(PATH)
 export GEM_HOME
