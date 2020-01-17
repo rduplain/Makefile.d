@@ -43,6 +43,7 @@ $(OCAML):
 .PHONY: $(OCAML)
 
 $(DUNE): $(OCAML_MK) | $(OCAML)
+	@opam update
 	@opam install --yes dune.$(DUNE_REV)
 	@touch $@
 
@@ -50,6 +51,7 @@ opam-install: $(OPAM_INSTALL) | $(OCAML)
 	@true
 
 $(OPAM_INSTALL): $(OCAML_MK) dune dune-project | dune-command
+	@opam update
 	@$(DUNE) build @install
 	@opam install --yes --deps-only $(PROJECT_ROOT)
 	@touch $@
