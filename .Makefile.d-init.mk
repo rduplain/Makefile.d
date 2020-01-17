@@ -4,7 +4,7 @@ MAKEFILE_D_URL ?= https://github.com/rduplain/Makefile.d.git
 MAKEFILE_D_REV ?= v1.3.1 # Use --ref instead of --tag below if untagged.
 
 ifeq ($(QWERTY_SH),)
-QWERTY_SH := curl -sSL qwerty.sh | sh -s -
+QWERTY_SH := curl --proto '=https' --tlsv1.2 -sSf https://qwerty.sh | sh -s -
 endif
 
 .Makefile.d/%.mk: .Makefile.d/path.mk

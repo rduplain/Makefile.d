@@ -187,8 +187,7 @@ generate_qwerty_command() {
 
     eval "$(generate_sha256_values "$1")"
 
-    echo "curl -sSL qwerty.sh |\\"
-    echo "    sh -s - \\"
+    echo "curl --proto '=https' --tlsv1.2 -sSf https://qwerty.sh | sh -s - \\"
     echo "    --sha256=${REPO_SHA256} \\"
 
     if [ -n "$QWERTY_FLAGS" ]; then
