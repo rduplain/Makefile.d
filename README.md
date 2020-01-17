@@ -76,6 +76,65 @@ Use variables and recipe patterns respective to included files. See
 [test/cljs/Makefile](test/cljs/Makefile) for example usage.
 
 
+### Integration
+
+Makefile.d .mk files that install project-local software use a convention of a
+hidden dotfile directory at the project root, `.reqd`, under which a
+Unix-familiar hierarchy applies:
+
+* `.reqd/src` - Source code, typically to prepare installation to a `bin`.
+* `.reqd/usr/bin` - Stand-alone executables.
+* `.reqd/opt/<package>/bin` - Executables in package-specific directories.
+
+By convention, project-local tools are available in Makefile variables. For
+example, `python.mk` sets `$(PYTHON)` to the path of the `python` command
+inside the newly configured virtualenv. Use of these variables ensures that
+`make` invocation finds the correct installation of Makefile.d-installed
+dependencies, without requiring any modifications to environment variable
+paths.
+
+Further convention has Makefile.d .mk files issue `export` statements for
+environment variables, typically `PATH`, in order to have any command executed
+by `make` be able to find the project-local paths.
+
+To start an interactive shell in a configured environment, add a target to the
+Makefile such as:
+
+```Makefile
+shell:
+	@bash
+```
+
+Unfortunately, `make` overrides the conventional Unix environment variable
+`SHELL`, so this `shell` target needs to read some other user configuration or
+pick a shell (`bash`, `zsh`, ...) for the purpose of the project.
+
+Another approach for an interactive shell is to start a new shell in the
+project root directory, and have the profile/rc configuration add project-local
+paths to relevant environment variables. For example, start `bash` in the
+project root -- a common occurrence with terminal multiplexers such as `screen`
+and `tmux` -- and have .bashrc include:
+
+```bash
+export PATH="$PWD"/.reqd/usr/bin:"$PATH"
+
+for dir in "$PWD"/.reqd/opt/*/bin; do
+    export PATH="$dir":"$PATH"
+done
+```
+
+Additional variables may be needed, such as `GEM_HOME` in `ruby.mk`:
+
+```bash
+if [ -e "$PWD"/.reqd/opt/ruby ]; then
+    export GEM_HOME="$PWD"/.reqd/opt/ruby
+fi
+```
+
+In general, using this approach, look for `export` statements in .mk files and
+port them to shell configuration.
+
+
 ### Platform Support
 
 This project is cross-platform for Unix systems -- GNU/Linux, Mac OS X, ... --
