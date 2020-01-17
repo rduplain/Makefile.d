@@ -160,11 +160,13 @@ home] to reliably download, verify, and unpack dependencies, which is a
 script-as-a-service available at https://qwerty.sh providing the latest version
 of qwerty.sh by default.
 
-To change this behavior, set the `QWERTY_SH` environment variable to an
-alternate download or local filepath, using one of the following patterns:
+To change this behavior, set the `QWERTY_SH_URL` environment variable to an
+alternate download or `QWERTY_SH` to a local filepath, using one of the
+following patterns:
 
 ```
-QWERTY_SH_URL="https://qwerty.sh/v0.5"
+QWERTY_SH_URL="https://qwerty.sh"
+QWERTY_SH_URL="https://qwerty.sh/v0.5.2"
 QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/master/qwerty.sh"
 QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.5.2/qwerty.sh"
 QWERTY_SH="sh /path/to/qwerty.sh"
