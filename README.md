@@ -166,9 +166,9 @@ following patterns:
 
 ```
 QWERTY_SH_URL="https://qwerty.sh"
-QWERTY_SH_URL="https://qwerty.sh/v0.5.2"
+QWERTY_SH_URL="https://qwerty.sh/v0.6"
 QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/master/qwerty.sh"
-QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.5.2/qwerty.sh"
+QWERTY_SH_URL="https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.6/qwerty.sh"
 QWERTY_SH="sh /path/to/qwerty.sh"
 QWERTY_SH="/path/to/qwerty.sh"
 ```
@@ -177,18 +177,18 @@ When setting `QWERTY_SH` to a local filepath:
 
 * Download qwerty.sh from <https://qwerty.sh>, which is always the latest
   release of qwerty.sh. Optionally include a version,
-  e.g. <https://qwerty.sh/v0.5>.
+  e.g. <https://qwerty.sh/v0.6>.
 * ... or from GitHub [through its "raw" file hosting][raw]; use a version tag
-  by changing [`master`][raw] in the URL to a version tag, e.g. [`v0.5`][raw
+  by changing [`master`][raw] in the URL to a version tag, e.g. [`v0.6`][raw
   v].
-  * Recommended: use a version tag, e.g. [`v0.5`][raw v]. Though
+  * Recommended: use a version tag, e.g. [`v0.6`][raw v]. Though
     [`master`][raw] is stable, it consistently refers to a pre-release; prefer
     a release version when downloading qwerty.sh.
 * Ensure that the resulting file is executable: `chmod a+x /path/to/qwerty.sh`.
 * Specify the absolute path to qwerty.sh.
 
 [qwerty.sh home]: https://github.com/rduplain/qwerty.sh
-[raw v]: https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.5/qwerty.sh
+[raw v]: https://raw.githubusercontent.com/rduplain/qwerty.sh/v0.6/qwerty.sh
 [raw]: https://raw.githubusercontent.com/rduplain/qwerty.sh/master/qwerty.sh
 
 
