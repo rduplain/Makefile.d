@@ -34,9 +34,9 @@ prove-lua: lua-command luarocks-command
 
 prove-luarocks-install: luarocks-install
 	@echo "Verifying LuaRocks install of 'say' module ..."
-	@lua -l say -v
+	@$(LUA) -l say -v
 
 LUAROCKS_COMMANDS := \
-	luarocks install say
+	$(LUAROCKS) install say
 
 $(LUAROCKS_INSTALL): $(MAKEFILE)

@@ -16,12 +16,12 @@ prove-lua: lua-command luarocks-command
 
 prove-luarocks-install: luarocks-install
 	@echo "Verifying LuaRocks install of 'say' module ..."
-	@lua -l say -v
-	@echo "Finding 'luacheck' on PATH ..."
-	@which luacheck
+	@$(LUA) -l say -v
+	@echo "Finding 'luacheck' ..."
+	$(LUA_PREFIX)/bin/luacheck --version
 
 LUAROCKS_COMMANDS := \
-	luarocks install luacheck 0.23.0 && \
-	luarocks install say
+	$(LUAROCKS) install luacheck 0.23.0 && \
+	$(LUAROCKS) install say
 
 $(LUAROCKS_INSTALL): $(MAKEFILE)
