@@ -21,7 +21,8 @@ LUAROCKS_SHA256 ?= \
 
 include $(DIR)/qwerty.mk
 
-LUAROCKS = $(LUA_PREFIX)/bin/luarocks
+LUAROCKS := $(LUA_PREFIX)/bin/luarocks
+LUAROCKS_INSTALL := $(LUA_PREFIX)/lib/.luarocks-install
 
 luarocks-command: $(LUAROCKS)
 	@true
@@ -43,3 +44,9 @@ $(LUAROCKS): $(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz $(LUA)
 
 $(LUA_SRC)/luarocks-$(LUAROCKS_REV).tar.gz:
 	$(QWERTY_SH) --sha256=$(LUAROCKS_SHA256) --output=$@ $(LUAROCKS_URL)
+
+$(LUAROCKS_INSTALL): | luarocks-command
+	$(LUAROCKS_COMMANDS)
+	@touch $@
+
+luarocks-install: $(LUAROCKS_INSTALL)

@@ -1,4 +1,6 @@
-all: prove-bats prove-janet prove-lua
+MAKEFILE := $(lastword $(MAKEFILE_LIST))
+
+all: prove-bats prove-janet prove-lua prove-luarocks-install
 
 include .Makefile.d/bats.mk
 
@@ -29,3 +31,12 @@ prove-lua: lua-command luarocks-command
 	@echo
 	@echo "Show Lua version:"
 	@"$(LUA)" -e "print(_VERSION)"
+
+prove-luarocks-install: luarocks-install
+	@echo "Verifying LuaRocks install of 'say' module ..."
+	@lua -l say -v
+
+LUAROCKS_COMMANDS := \
+	luarocks install say
+
+$(LUAROCKS_INSTALL): $(MAKEFILE)
