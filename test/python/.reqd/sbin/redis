@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-UNPACKED=redis-5.0.5
+UNPACKED=redis-5.0.7
 ARCHIVE=$UNPACKED.tar.gz
-SHA256=2139009799d21d8ff94fc40b7f36ac46699b9e1254086299f8d3b223ca54a375
+SHA256=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b
 
 check() {
     # Installs to this location, which local to the project.
