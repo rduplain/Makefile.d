@@ -14,6 +14,7 @@ OCAML := $(_OPAM)/bin/ocaml
 DUNE := $(_OPAM)/bin/dune
 
 OPAM_INSTALL := $(_OPAM)/lib/.opam-install
+OPAM_UPDATE := $(_OPAM)/lib/.opam-update
 
 # Re-create `eval $(opam env)`.
 export OPAM_SWITCH_PREFIX := $(_OPAM)
@@ -42,16 +43,21 @@ $(OCAML):
 
 .PHONY: $(OCAML)
 
-$(DUNE): $(OCAML_MK) | $(OCAML)
-	@opam update
+$(DUNE): $(OCAML_MK) | $(OCAML) opam-update
 	@opam install --yes dune.$(DUNE_REV)
 	@touch $@
 
 opam-install: $(OPAM_INSTALL) | $(OCAML)
 	@true
 
-$(OPAM_INSTALL): $(OCAML_MK) dune dune-project | dune-command
-	@opam update
+$(OPAM_INSTALL): $(OCAML_MK) dune dune-project | dune-command opam-update
 	@$(DUNE) build @install
 	@opam install --yes --deps-only $(PROJECT_ROOT)
+	@touch $@
+
+opam-update: $(OPAM_UPDATE) | $(OCAML)
+	@true
+
+$(OPAM_UPDATE): $(OCAML_MK)
+	@opam update
 	@touch $@
