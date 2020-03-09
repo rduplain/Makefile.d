@@ -1,4 +1,4 @@
-all: test
+all: utop-command test
 
 include .Makefile.d/ocaml.mk
 

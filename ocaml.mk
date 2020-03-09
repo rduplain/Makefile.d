@@ -5,6 +5,7 @@ DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 OCAML_REV ?= 4.09.0
 DUNE_REV ?= 2.3.1
+UTOP_REV ?= 2.4.2
 
 include $(DIR)/command.mk
 include $(DIR)/path.mk
@@ -12,6 +13,7 @@ include $(DIR)/path.mk
 _OPAM := $(PROJECT_ROOT)/_opam
 OCAML := $(_OPAM)/bin/ocaml
 DUNE := $(_OPAM)/bin/dune
+UTOP := $(_OPAM)/bin/utop
 
 OPAM_INSTALL := $(_OPAM)/lib/.opam-install
 OPAM_UPDATE := $(_OPAM)/lib/.opam-update
@@ -32,6 +34,9 @@ ocaml-command: $(OCAML)
 dune-command: $(DUNE)
 	@true
 
+utop-command: $(UTOP)
+	@true
+
 $(OCAML):
 	@if ! $(DIR)/bin/opam-check-switch $(_OPAM) $(OCAML_REV); \
 		then \
@@ -45,6 +50,10 @@ $(OCAML):
 
 $(DUNE): $(OCAML_MK) | $(OCAML) opam-update
 	@opam install --yes dune.$(DUNE_REV)
+	@touch $@
+
+$(UTOP): $(OCAML_MK) | $(OCAML)
+	@opam install --yes utop.$(UTOP_REV)
 	@touch $@
 
 opam-install: $(OPAM_INSTALL) | $(OCAML)
