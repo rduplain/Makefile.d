@@ -4,7 +4,7 @@ JANET_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 JANET_URL ?= https://github.com/janet-lang/janet.git
-JANET_REV ?= v1.8.1
+JANET_REV ?= v1.9.0
 
 include $(DIR)/path.mk
 
