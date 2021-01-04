@@ -3,9 +3,9 @@
 OCAML_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
-OCAML_REV ?= 4.10.0
-DUNE_REV ?= 2.4.0
-UTOP_REV ?= 2.4.3
+OCAML_REV ?= 4.11.1
+DUNE_REV ?= 2.7.1
+UTOP_REV ?= 2.6.0
 
 include $(DIR)/command.mk
 include $(DIR)/path.mk
