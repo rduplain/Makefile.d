@@ -28,6 +28,13 @@ CAML_LD_LIBRARY_PATH := $(_OPAM)/lib/stublibs:$(_OPAM)/lib/ocaml/stublibs
 CAML_LD_LIBRARY_PATH := $(CAML_LD_LIBRARY_PATH):$(_OPAM)/lib/ocaml
 export CAML_LD_LIBRARY_PATH
 
+# Hook development dependencies listed in OPAM_DEV variable.
+ifeq ($(OPAM_DEV),)
+OPAM_INSTALL_DEV :=
+else
+OPAM_INSTALL_DEV := opam install --yes $(OPAM_DEV)
+endif
+
 ocaml-command: $(OCAML)
 	@true
 
@@ -63,6 +70,7 @@ $(OPAM_INSTALL): $(OCAML_MK) dune-project | dune-command opam-update
 	@$(DUNE) build @install
 	@echo
 	@opam install --yes --deps-only $(PROJECT_ROOT)
+	@$(OPAM_INSTALL_DEV)
 	@touch $@
 
 opam-update: $(OPAM_UPDATE) | $(OCAML)
