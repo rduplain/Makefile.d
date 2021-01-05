@@ -59,7 +59,7 @@ $(UTOP): $(OCAML_MK) | $(OCAML)
 opam-install: $(OPAM_INSTALL) | $(OCAML)
 	@true
 
-$(OPAM_INSTALL): $(OCAML_MK) dune dune-project | dune-command opam-update
+$(OPAM_INSTALL): $(OCAML_MK) dune-project | dune-command opam-update
 	@$(DUNE) build @install
 	@opam install --yes --deps-only $(PROJECT_ROOT)
 	@touch $@
