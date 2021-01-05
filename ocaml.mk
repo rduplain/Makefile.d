@@ -61,6 +61,7 @@ opam-install: $(OPAM_INSTALL) | $(OCAML)
 
 $(OPAM_INSTALL): $(OCAML_MK) dune-project | dune-command opam-update
 	@$(DUNE) build @install
+	@echo
 	@opam install --yes --deps-only $(PROJECT_ROOT)
 	@touch $@
 
