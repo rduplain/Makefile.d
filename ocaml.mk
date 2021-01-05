@@ -10,10 +10,10 @@ UTOP_REV ?= 2.6.0
 include $(DIR)/command.mk
 include $(DIR)/path.mk
 
-_OPAM := $(PROJECT_ROOT)/_opam
-OCAML := $(_OPAM)/bin/ocaml
-DUNE := $(_OPAM)/bin/dune
-UTOP := $(_OPAM)/bin/utop
+_OPAM ?= $(PROJECT_ROOT)/_opam
+OCAML ?= $(_OPAM)/bin/ocaml
+DUNE ?= $(_OPAM)/bin/dune
+UTOP ?= $(_OPAM)/bin/utop
 
 OPAM_INSTALL := $(_OPAM)/lib/.opam-install
 OPAM_UPDATE := $(_OPAM)/lib/.opam-update
