@@ -66,11 +66,12 @@ $(UTOP): $(OCAML_MK) | $(OCAML)
 opam-install: $(OPAM_INSTALL) | $(OCAML)
 	@true
 
+# Note: Set .opam file as prerequisite before opam-install.
 $(OPAM_INSTALL): $(OCAML_MK) dune-project | dune-command opam-update
-	@$(DUNE) build @install
-	@echo
 	@opam install --yes --deps-only $(PROJECT_ROOT)
 	@$(OPAM_INSTALL_DEV)
+	@$(DUNE) build @install
+	@echo
 	@touch $@
 
 opam-update: $(OPAM_UPDATE) | $(OCAML)
