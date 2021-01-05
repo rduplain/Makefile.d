@@ -79,3 +79,6 @@ opam-update: $(OPAM_UPDATE) | $(OCAML)
 $(OPAM_UPDATE): $(OCAML_MK)
 	@opam update
 	@touch $@
+
+ocaml-clean:
+	@rm -f $(OPAM_INSTALL) $(OPAM_UPDATE)
