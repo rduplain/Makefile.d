@@ -80,5 +80,8 @@ $(OPAM_UPDATE): $(OCAML_MK)
 	@opam update
 	@touch $@
 
+%.opam: dune-command
+	@$(DUNE) build $@
+
 ocaml-clean:
 	@rm -f $(OPAM_INSTALL) $(OPAM_UPDATE)
