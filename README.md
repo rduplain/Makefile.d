@@ -196,4 +196,4 @@ When setting `QWERTY_SH` to a local filepath:
 
 [build]: https://travis-ci.org/rduplain/Makefile.d.svg?branch=master
 
-Copyright (c) 2015-2020, R. DuPlain. BSD licensed.
+Copyright (c) 2015-2021, R. DuPlain. BSD licensed.
