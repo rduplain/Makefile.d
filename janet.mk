@@ -4,7 +4,7 @@ JANET_MK := $(lastword $(MAKEFILE_LIST))
 DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 
 JANET_URL ?= https://github.com/janet-lang/janet.git
-JANET_REV ?= v1.15.0
+JANET_REV ?= v1.19.0
 
 include $(DIR)/path.mk
 
@@ -33,7 +33,8 @@ $(JPM_DEPS_INSTALL): project.janet
 $(JANET): $(JANET_MK)
 	test -d $(JANET_SRC) || git clone $(JANET_URL) $(JANET_SRC)
 	cd $(JANET_SRC); git checkout $(JANET_REV)
-	cd $(JANET_SRC); $(MAKE) $(JANET_BUILD_FLAGS) && $(MAKE) install
+	cd $(JANET_SRC); \
+		$(MAKE) $(JANET_BUILD_FLAGS) && $(MAKE) install install-jpm-git
 	@echo "Janet executable in place: $(JANET) ..."
 	@touch $@
 

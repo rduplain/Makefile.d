@@ -13,7 +13,7 @@ include .Makefile.d/janet.mk
 prove-janet: janet-command jpm-command
 	@echo "Verifying Janet install ..."
 	@echo "Show jpm help:"
-	@"$(JPM)" --help
+	@"$(JPM)" help
 	@echo
 	@echo "That is jpm's help above. Thank you, jpm."
 	@echo
